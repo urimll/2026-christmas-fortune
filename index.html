@@ -574,34 +574,37 @@
             }, 800);
         }
 
-        function captureAndShare() {
+       function captureAndShare() {
             const btn = event.target;
             const originalText = btn.innerText;
             btn.innerText = "✨ 이미지 생성 중...";
 
             const target = document.getElementById('capture-target');
 
-            html2canvas(target, {
-                backgroundColor: "#0f0c29", // 🔥 [수정됨] 배경색을 강제로 진한 남색으로 지정!
+            html2canvas(target, { 
+                backgroundColor: "#0f0c29",
                 scale: 2,
                 logging: false,
                 useCORS: true
             }).then(canvas => {
-                canvas.toBlob(function (blob) {
+                canvas.toBlob(function(blob) {
                     const file = new File([blob], "fortune_2026.png", { type: "image/png" });
+                    
                     if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
                         navigator.share({
                             files: [file],
                             title: '2026년 신년 운세',
-                            text: '내 2026년 운세 결과야! 🔮\n너도 확인해봐 👇',
+                            // 🔥 [수정됨] 텍스트 뒤에 주소를 직접 붙였습니다!
+                            text: '내 2026년 운세 결과야! 🔮\n너도 확인해봐 👇\n' + window.location.href,
                             url: window.location.href
                         }).then(() => btn.innerText = originalText).catch(() => btn.innerText = originalText);
                     } else {
+                        // PC 등 공유 미지원 시
                         const link = document.createElement('a');
                         link.download = '2026_fortune.png';
                         link.href = canvas.toDataURL('image/png');
                         link.click();
-                        alert("이미지가 저장되었습니다! 인스타 스토리에 공유해보세요.");
+                        alert("이미지가 저장되었습니다! 인스타/트위터에 올려보세요.");
                         btn.innerText = originalText;
                     }
                 }, 'image/png');
