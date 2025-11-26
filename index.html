@@ -280,26 +280,38 @@
             adArea.style.display = 'block'; // 광고도 같이 띄우기
         }
         function shareResult() {
-            // 1. 현재 결과 텍스트 가져오기 (결과가 없으면 기본 멘트)
-            const resultText = document.getElementById('result').innerText || "내 2026년 운세를 확인해보세요!";
+            // 1. 현재 결과 텍스트 가져오기
+            const resultText = document.getElementById('result').innerText;
 
-            // 2. 공유할 데이터 설정
-            const shareData = {
-                title: '2026년 텅장 예언 / 크리스마스 운세',
-                text: resultText + "\n\n너도 한번 해봐! 👇",
-                url: uirml.dothome.co.kr // 현재 사이트 주소,
+            // 결과가 아직 안 나왔으면 알림 뜨고 종료
+            if (!resultText) {
+                alert("먼저 이름을 입력하고 결과를 확인해주세요!");
+                return;
             }
 
-            // 3. 네이티브 공유하기 (모바일 중심)
+            // 2. 공유할 데이터 설정 (따옴표 추가함!)
+            const shareData = {
+                title: '2026년 크리스마스 운세',
+                text: resultText + "\n\n너도 한번 해봐! 👇",
+                url: window.location.href // 자동으로 현재 주소를 가져옵니다 (추천)
+            };
+
+            // 3. 네이티브 공유하기 (HTTPS 필수)
             if (navigator.share) {
                 navigator.share(shareData)
                     .then(() => console.log('공유 성공'))
                     .catch((error) => console.log('공유 실패', error));
             } else {
-                // 4. PC 등 공유 기능이 없는 경우 -> 클립보드에 주소 복사
-                navigator.clipboard.writeText(window.location.href + "\n\n" + resultText)
-                    .then(() => alert("결과와 주소가 복사되었습니다! 카톡방에 붙여넣기 하세요."))
-                    .catch(() => alert("복사하기를 지원하지 않는 브라우저입니다."));
+                // 4. 공유 기능 미지원 시 (PC 또는 HTTP 환경) -> 구식 복사 방법 사용
+                // (http에서도 작동하도록 구형 방식과 신형 방식을 섞어서 처리)
+                const tempInput = document.createElement("textarea");
+                document.body.appendChild(tempInput);
+                tempInput.value = window.location.href + "\n\n" + resultText;
+                tempInput.select();
+                document.execCommand("copy"); // 구형 브라우저 호환
+                document.body.removeChild(tempInput);
+
+                alert("결과가 복사되었습니다! (카톡에 붙여넣기 하세요)");
             }
         }
     </script>
