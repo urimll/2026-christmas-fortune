@@ -210,20 +210,27 @@
             word-break: keep-all;
         }
 
-        .bottom-btns {
-            display: none;
-            gap: 10px;
-            margin-top: 30px;
-            width: 100%;
-            max-width: 300px;
+        /* 🔥 하단 버튼 중앙 정렬 스타일 🔥 */
+        .bottom-btns { 
+            display: none; 
+            gap: 10px; 
+            margin: 30px auto; /* 위아래 30px, 좌우 자동(중앙정렬) */
+            width: 100%; 
+            max-width: 340px; 
+            justify-content: center; 
         }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--gold);
-            color: var(--gold);
+        
+        /* 버튼 비율 조절 */
+        .btn-outline { 
+            flex: 1; /* '다시하기'는 좁게 */
+            background: transparent; 
+            border: 1px solid var(--gold); 
+            color: var(--gold); 
         }
-
+        
+        .btn-share { 
+            flex: 1.8; /* '저장/공유'는 넓게 */
+        }
         /* =========================================
            🔥 캡처용 이미지 스타일 (폰트 축소 버전 유지)
         ========================================= */
@@ -374,14 +381,34 @@
         </div>
         <div class="bottom-btns" id="bottom-btns">
             <button class="btn-gold btn-outline" onclick="location.reload()">다시하기</button>
-            <button class="btn-gold" onclick="captureAndShare()">📸 결과 이미지 저장/공유</button>
+            <button class="btn-gold btn-share" onclick="captureAndShare()">📸 결과 저장/공유</button>
         </div>
-        <div id="ad-box" style="margin-top:20px; display:none; color: var(--gold); font-size:12px;">
-            👇 당신에게 필요한 행운의 아이템 👇
-            <div
-                style="background:rgba(212, 175, 55, 0.1); height:50px; border:1px solid rgba(212, 175, 55, 0.3); border-radius:5px; line-height:50px; margin-top:5px; color:#aaa;">
-                광고 배너 영역</div>
-        </div>
+        <div id="ad-box" style="margin-top:20px; display:none;">
+           <p style="color:var(--gold); font-size:13px; margin-bottom:10px; opacity:0.8;">
+               👇 복채는 '클릭'으로 대신할게요! 👇
+           </p>
+           
+           <a href="https://link.coupang.com/a/c7YBPa" target="_blank" style="text-decoration:none;">
+               <div style="
+                   background: linear-gradient(45deg, #D4AF37, #FDC830);
+                   color: #000;
+                   padding: 15px;
+                   border-radius: 10px;
+                   font-weight: bold;
+                   font-size: 16px;
+                   box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+                   display: flex; align-items: center; justify-content: center; gap: 10px;
+                   transition: transform 0.2s;
+               " onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                   <span>🎁</span>
+                   <span>나의 '행운의 아이템' 확인하기</span>
+               </div>
+           </a>
+           
+           <p style="font-size:10px; color:#666; margin-top:8px; opacity:0.5;">
+               이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
+           </p>
+       </div>
     </div>
 
     <div id="capture-target">
