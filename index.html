@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>🔮 2026년 신년 운세 타로점</title>
-    <meta property="og:title" content="2026년 신년 운세 타로점">
-    <meta property="og:description" content="카드를 뒤집어 당신의 2026년 운명을 확인하세요.">
-    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5187795938118945"
+     crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
     <style>
         :root {
@@ -21,163 +22,114 @@
         * { box-sizing: border-box; }
 
         body { 
-            margin: 0;
-            padding: 20px;
-            font-family: 'Gowun Batang', serif;
-            background: var(--bg-gradient);
-            color: var(--text-light);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
+            margin: 0; padding: 20px; font-family: 'Gowun Batang', serif;
+            background: var(--bg-gradient); color: var(--text-light);
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; overflow-x: hidden;
         }
 
-        /* 배경 별빛 효과 */
+        /* --- 메인 화면 스타일 (기존 유지) --- */
         .stars {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;
-            background-image: 
-                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 5px),
-                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 3px),
-                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 4px);
-            background-size: 550px 550px, 350px 350px, 250px 250px;
-            background-position: 0 0, 40px 60px, 130px 270px;
-            z-index: 0;
+            background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 5px), radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 3px);
+            background-size: 550px 550px, 350px 350px; z-index: 0;
         }
-
-        .container {
-            width: 100%;
-            max-width: 380px;
-            position: relative;
-            z-index: 10;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 30px;
-            color: var(--gold);
-            text-shadow: var(--gold-glow);
-            margin-bottom: 8px;
-            line-height: 1.3;
-        }
-        .header p { font-size: 15px; opacity: 0.8; letter-spacing: 1px; color: #ddd; }
-
-        /* 입력 영역 */
+        .container { width: 100%; max-width: 380px; position: relative; z-index: 10; text-align: center; }
+        .header h1 { font-size: 30px; color: var(--gold); text-shadow: var(--gold-glow); margin-bottom: 8px; }
+        .header p { font-size: 15px; opacity: 0.8; color: #ddd; }
         .input-area {
-            background: rgba(0,0,0,0.6);
-            padding: 30px 20px;
-            border: 1px solid var(--gold);
-            border-radius: 15px;
-            box-shadow: var(--gold-glow);
-            margin-top: 30px;
-            backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.6); padding: 30px 20px; border: 1px solid var(--gold);
+            border-radius: 15px; box-shadow: var(--gold-glow); margin-top: 30px; backdrop-filter: blur(5px);
         }
-
         input {
-            width: 100%;
-            padding: 15px;
-            font-size: 18px;
-            background: transparent;
-            border: none;
-            border-bottom: 2px solid var(--gold);
-            color: var(--gold);
-            text-align: center;
-            font-family: 'Gowun Batang', serif;
-            margin-bottom: 25px;
+            width: 100%; padding: 15px; font-size: 18px; background: transparent; border: none;
+            border-bottom: 2px solid var(--gold); color: var(--gold); text-align: center;
+            font-family: 'Gowun Batang', serif; margin-bottom: 25px;
         }
         input:focus { outline: none; border-bottom: 2px solid #fff; }
-        input::placeholder { color: rgba(212, 175, 55, 0.4); }
-
         .btn-gold {
-            background: linear-gradient(45deg, #D4AF37, #FDC830);
-            color: #000;
-            width: 100%;
-            padding: 16px;
-            font-size: 19px;
-            font-weight: bold;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-            transition: 0.3s;
-            font-family: 'Gowun Batang', serif;
+            background: linear-gradient(45deg, #D4AF37, #FDC830); color: #000; width: 100%;
+            padding: 16px; font-size: 19px; font-weight: bold; border: none; border-radius: 30px;
+            cursor: pointer; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); font-family: 'Gowun Batang', serif;
         }
-        .btn-gold:active { transform: scale(0.98); }
-
-        /* 로딩 */
         #loading { display: none; margin-top: 50px; }
-        .crystal-ball {
-            font-size: 70px;
-            margin-bottom: 20px;
-            animation: float 2s infinite ease-in-out;
-            filter: drop-shadow(0 0 10px var(--gold));
-        }
+        .crystal-ball { font-size: 70px; margin-bottom: 20px; animation: float 2s infinite ease-in-out; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-
-        /* 🃏 3D 타로 카드 영역 */
         #card-area { display: none; perspective: 1000px; width: 300px; height: 460px; margin: 20px auto; }
-        
-        .card-inner {
-            position: relative; width: 100%; height: 100%; text-align: center;
-            transition: transform 0.8s; transform-style: preserve-3d; cursor: pointer;
-        }
+        .card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s; transform-style: preserve-3d; }
         .card-inner.flipped { transform: rotateY(180deg); }
-
         .card-front, .card-back {
-            position: absolute; width: 100%; height: 100%;
-            backface-visibility: hidden;
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
             border-radius: 15px; border: 2px solid var(--gold);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
-
-        /* 카드 앞면 */
-        .card-front {
-            background: #1a1a2e;
-            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-            color: var(--gold);
-        }
-        .card-front h2 { font-size: 50px; margin: 0; opacity: 0.8; }
-        .card-front span { font-size: 14px; margin-top: 10px; opacity: 0.6; }
-
-        /* 카드 뒷면 (결과) */
+        .card-front { background: #1a1a2e; color: var(--gold); background-image: url('https://www.transparenttextures.com/patterns/stardust.png'); }
+        .card-front h2 { font-size: 50px; margin: 0; }
         .card-back {
             background: linear-gradient(135deg, #200122, #6f0000);
-            color: var(--text-light);
-            transform: rotateY(180deg);
-            padding: 25px;
-            border: 2px solid #fff;
+            color: var(--text-light); transform: rotateY(180deg); padding: 25px; border: 2px solid #fff;
         }
-
-        .result-title { 
-            color: var(--gold); 
-            font-size: 18px; 
-            margin-bottom: 15px; 
-            border-bottom: 1px solid rgba(255,255,255,0.2); 
-            padding-bottom: 10px;
-            width: 100%;
-        }
-        .result-keyword {
-            font-size: 28px;
-            font-weight: bold;
-            color: #fff;
-            margin-bottom: 15px;
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
-        }
-        .result-desc { 
-            font-size: 18px; 
-            line-height: 1.6; 
-            opacity: 0.9; 
-            word-break: keep-all; 
-        }
-        
-        .click-guide { position: absolute; bottom: 20px; font-size: 12px; opacity: 0.5; animation: blink 2s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
-
-        /* 하단 버튼 */
+        .result-keyword { font-size: 28px; font-weight: bold; color: #fff; margin-bottom: 15px; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+        .result-desc { font-size: 18px; line-height: 1.6; word-break: keep-all; }
         .bottom-btns { display: none; gap: 10px; margin-top: 30px; width: 100%; max-width: 300px;}
         .btn-outline { background: transparent; border: 1px solid var(--gold); color: var(--gold); }
+
+        /* =========================================
+           🔥 캡처용 이미지 스타일 (폰트 축소 버전 유지)
+        ========================================= */
+        #capture-target {
+            position: fixed; top: -9999px; left: -9999px; 
+            width: 360px; height: 640px; 
+            /* CSS 배경도 유지 (혹시 모르니) */
+            background: linear-gradient(to bottom, #151525, #252040, #0a0a15);
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+            border: 6px double #D4AF37;
+            padding: 35px 25px;
+            box-sizing: border-box;
+            display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+            text-align: center; font-family: 'Gowun Batang', serif;
+        }
+
+        .cap-header .cap-subtitle { color: var(--gold); font-size: 13px; letter-spacing: 4px; margin-bottom: 4px; opacity: 0.7; }
+        .cap-header .cap-title { color: #fff; font-size: 24px; font-weight: bold; text-shadow: 0 0 10px var(--gold); margin: 0; }
+        
+        .cap-card-visual {
+            width: 100%; flex-grow: 1; margin: 25px 0;
+            background: linear-gradient(135deg, #220033, #400000); 
+            border: 2px solid var(--gold); border-radius: 12px;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.25);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 25px; position: relative;
+        }
+        
+        .cap-card-visual::before, .cap-card-visual::after { 
+            content: '✦'; position: absolute; color: var(--gold); font-size: 18px; opacity: 0.5; 
+        }
+        .cap-card-visual::before { top: 12px; left: 12px; }
+        .cap-card-visual::after { bottom: 12px; right: 12px; }
+
+        .cap-for { color: var(--gold); font-size: 12px; margin-bottom: 8px; opacity: 0.6; letter-spacing: 1px;}
+        
+        .cap-name { 
+            color: #fff; font-size: 20px; 
+            font-weight: bold; margin-bottom: 20px; 
+            border-bottom: 1px solid var(--gold); display: inline-block; padding-bottom: 4px; 
+        }
+        
+        .cap-keyword { 
+            font-size: 32px; 
+            color: var(--gold); font-weight: bold; margin-bottom: 15px; 
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+            line-height: 1.2;
+        }
+        
+        .cap-desc { 
+            font-size: 16px; 
+            color: #f0f0f0; line-height: 1.6; word-break: keep-all; opacity: 0.9; font-weight: 400;
+        }
+        
+        .cap-footer { color: rgba(255,255,255,0.3); font-size: 11px; letter-spacing: 1px; }
     </style>
 </head>
 <body>
@@ -188,47 +140,55 @@
             <h1>2026<br>운명의 타로점 🔮</h1>
             <p>별들이 말해주는 당신의 내년 운세</p>
         </div>
-
         <div class="input-area" id="input-area">
             <input type="text" id="username" placeholder="이름을 입력하세요" autocomplete="off">
             <button class="btn-gold" onclick="startDivination()">운명 카드 뽑기</button>
         </div>
-
         <div id="loading">
             <div class="crystal-ball">🔮</div>
             <p style="color:var(--gold);">우주의 기운을 모으는 중...</p>
         </div>
-
         <div id="card-area" onclick="flipCard()">
             <div class="card-inner" id="card-inner">
-                <div class="card-front">
-                    <h2>2026</h2>
-                    <span>터치해서 뒤집기</span>
-                </div>
+                <div class="card-front"><h2>2026</h2><span style="font-size:14px; margin-top:10px; opacity:0.6;">터치해서 뒤집기</span></div>
                 <div class="card-back">
-                    <div class="result-title">THE FATE OF <span id="res-name"></span></div>
+                    <div style="color:var(--gold); font-size:18px; margin-bottom:15px;">THE FATE OF <span id="res-name"></span></div>
                     <div class="result-keyword" id="res-keyword"></div>
                     <div class="result-desc" id="res-desc"></div>
-                    
-                    <div class="click-guide">화면을 캡처하여 간직하세요</div>
+                    <div style="position:absolute; bottom:20px; font-size:12px; opacity:0.5;">▼ 하단 버튼으로 저장/공유 ▼</div>
                 </div>
             </div>
         </div>
-
         <div class="bottom-btns" id="bottom-btns">
             <button class="btn-gold btn-outline" onclick="location.reload()">다시하기</button>
-             <button class="btn-gold" onclick="shareResult()">복채로 공유하기</button>
+            <button class="btn-gold" onclick="captureAndShare()">📸 결과 이미지 저장/공유</button>
         </div>
-         <div id="ad-box" style="margin-top:20px; display:none; color: var(--gold); font-size:12px;">
-            👇 당신에게 필요한 행운의 아이템 👇
-            <div style="background:rgba(212, 175, 55, 0.1); height:50px; border:1px solid rgba(212, 175, 55, 0.3); border-radius:5px; line-height:50px; margin-top:5px; color:#aaa;">
-                광고 배너 영역
-            </div>
+        <div id="ad-box" style="margin-top:20px; display:none; color: var(--gold); font-size:12px;">
+           👇 당신에게 필요한 행운의 아이템 👇
+           <div style="background:rgba(212, 175, 55, 0.1); height:50px; border:1px solid rgba(212, 175, 55, 0.3); border-radius:5px; line-height:50px; margin-top:5px; color:#aaa;">광고 배너 영역</div>
        </div>
     </div>
 
+    <div id="capture-target">
+        <div class="cap-header">
+            <div class="cap-subtitle">MYSTICAL TAROT</div>
+            <div class="cap-title">2026 신년 운세</div>
+        </div>
+
+        <div class="cap-card-visual">
+            <div class="cap-for">THE FATE OF</div>
+            <div class="cap-name" id="cap-name">홍길동</div>
+            <div class="cap-keyword" id="cap-keyword">대박의 기운</div>
+            <div class="cap-desc" id="cap-desc">설명 텍스트입니다.</div>
+        </div>
+        
+        <div class="cap-footer">
+            당신의 운명을 확인해보세요 | www.simsimu.com
+        </div>
+    </div>
+
     <script>
-        // 🔮 2026년 신년 운세 데이터베이스 (50개)
+        // 운세 데이터 (50개)
         const fortunes = [
             { k: "대박의 기운", d: "숨만 쉬어도 통장에 돈이 쌓이는 해. 로또를 사도 좋습니다." },
             { k: "새로운 인연", d: "평생을 함께할 귀인이 나타납니다. 사람을 귀하게 여기세요." },
@@ -281,38 +241,36 @@
             { k: "무한 긍정", d: "어떤 시련이 와도 긍정적으로 이겨내는 멘탈갑이 됩니다." },
             { k: "주인공은 너", d: "2026년이라는 영화의 주연 배우는 바로 당신입니다." }
         ];
-
         let isResultReady = false;
 
         function startDivination() {
             const name = document.getElementById('username').value;
-            if(!name) return alert('이름을 알려주세요.');
-
-            // UI 전환
+            if(!name) return alert('이름을 입력해주세요.');
             document.getElementById('input-area').style.display = 'none';
             document.getElementById('loading').style.display = 'block';
-
-            // 결과 준비
             prepareResult(name);
-
             setTimeout(() => {
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('card-area').style.display = 'block';
-                isResultReady = true; // 이제 카드 뒤집기 가능
+                isResultReady = true; 
             }, 2000); 
         }
 
         function prepareResult(name) {
             let sum = 0;
             for(let i=0; i<name.length; i++) sum += name.charCodeAt(i);
-            
-            // 이름에 따라 랜덤하지만 고정된 결과
             const idx = sum % fortunes.length;
             const fate = fortunes[idx];
             
+            // 메인 화면
             document.getElementById('res-name').innerText = name;
-            document.getElementById('res-keyword').innerText = fate.k; // 키워드 (예: 대박의 기운)
-            document.getElementById('res-desc').innerText = fate.d;    // 설명
+            document.getElementById('res-keyword').innerText = fate.k;
+            document.getElementById('res-desc').innerText = fate.d;
+
+            // 캡처 화면
+            document.getElementById('cap-name').innerText = name;
+            document.getElementById('cap-keyword').innerText = fate.k;
+            document.getElementById('cap-desc').innerText = fate.d;
         }
 
         function flipCard() {
@@ -324,18 +282,38 @@
             }, 800);
         }
 
-        function shareResult() {
-            const keyword = document.getElementById('res-keyword').innerText;
-            const desc = document.getElementById('res-desc').innerText;
-             if (navigator.share) {
-                navigator.share({
-                    title: '2026년 신년 운세 타로',
-                    text: `[${keyword}]\n${desc}\n\n내 2026년 운세 확인하기 👇`,
-                    url: window.location.href
-                });
-            } else {
-                alert("주소가 복사되었습니다.");
-            }
+        function captureAndShare() {
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = "✨ 이미지 생성 중...";
+
+            const target = document.getElementById('capture-target');
+
+            html2canvas(target, { 
+                backgroundColor: "#0f0c29", // 🔥 [수정됨] 배경색을 강제로 진한 남색으로 지정!
+                scale: 2,
+                logging: false,
+                useCORS: true
+            }).then(canvas => {
+                canvas.toBlob(function(blob) {
+                    const file = new File([blob], "fortune_2026.png", { type: "image/png" });
+                    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                        navigator.share({
+                            files: [file],
+                            title: '2026년 신년 운세',
+                            text: '내 2026년 운세 결과야! 🔮\n너도 확인해봐 👇',
+                            url: window.location.href
+                        }).then(() => btn.innerText = originalText).catch(() => btn.innerText = originalText);
+                    } else {
+                        const link = document.createElement('a');
+                        link.download = '2026_fortune.png';
+                        link.href = canvas.toDataURL('image/png');
+                        link.click();
+                        alert("이미지가 저장되었습니다! 인스타 스토리에 공유해보세요.");
+                        btn.innerText = originalText;
+                    }
+                }, 'image/png');
+            });
         }
     </script>
 </body>
