@@ -1,320 +1,342 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎄 올해 크리스마스에 나는? 🎄</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🔮 2026년 신년 운세 타로점</title>
+    <meta property="og:title" content="2026년 신년 운세 타로점">
+    <meta property="og:description" content="카드를 뒤집어 당신의 2026년 운명을 확인하세요.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
-        body {
-            text-align: center;
-            font-family: 'GmarketSansMedium', sans-serif;
-            background-color: #a4193d;
-            /* 크리스마스 레드 */
-            color: #fff;
+        :root {
+            --bg-dark: #0f0c29;
+            --bg-gradient: linear-gradient(to bottom, #24243e, #0f0c29, #000000);
+            --gold: #D4AF37; 
+            --gold-glow: 0 0 15px rgba(212, 175, 55, 0.5);
+            --text-light: #FDFBF7;
+        }
+
+        * { box-sizing: border-box; }
+
+        body { 
+            margin: 0;
             padding: 20px;
+            font-family: 'Gowun Batang', serif;
+            background: var(--bg-gradient);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             overflow-x: hidden;
         }
 
-        .snow-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
+        /* 배경 별빛 효과 */
+        .stars {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 5px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 3px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 4px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
+            z-index: 0;
         }
 
         .container {
-            max-width: 500px;
-            margin: 50px auto;
-            background: #fff;
-            color: #333;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 380px;
             position: relative;
             z-index: 10;
-            border: 5px solid #2f5a2d;
-            /* 크리스마스 그린 */
-        }
-
-        h1 {
-            color: #a4193d;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        p {
-            color: #2f5a2d;
-            font-weight: bold;
-        }
-
-        input {
-            padding: 15px;
-            width: 80%;
-            margin: 15px 0;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 16px;
             text-align: center;
         }
 
-        button {
-            background-color: #2f5a2d;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            border-radius: 10px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-            transition: 0.3s;
+        .header h1 {
+            font-size: 30px;
+            color: var(--gold);
+            text-shadow: var(--gold-glow);
+            margin-bottom: 8px;
+            line-height: 1.3;
         }
+        .header p { font-size: 15px; opacity: 0.8; letter-spacing: 1px; color: #ddd; }
 
-        button:hover {
-            background-color: #244422;
-            transform: scale(1.02);
-        }
-
-        #result {
-            margin-top: 25px;
-            font-size: 22px;
-            font-weight: bold;
-            line-height: 1.6;
-            white-space: pre-wrap;
-            display: none;
-            background-color: #f0fff4;
-            padding: 20px;
+        /* 입력 영역 */
+        .input-area {
+            background: rgba(0,0,0,0.6);
+            padding: 30px 20px;
+            border: 1px solid var(--gold);
             border-radius: 15px;
-            border: 2px dashed #2f5a2d;
+            box-shadow: var(--gold-glow);
+            margin-top: 30px;
+            backdrop-filter: blur(5px);
         }
 
-        .ad-box {
-            margin-top: 20px;
-            font-size: 12px;
-            color: #666;
+        input {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--gold);
+            color: var(--gold);
+            text-align: center;
+            font-family: 'Gowun Batang', serif;
+            margin-bottom: 25px;
+        }
+        input:focus { outline: none; border-bottom: 2px solid #fff; }
+        input::placeholder { color: rgba(212, 175, 55, 0.4); }
+
+        .btn-gold {
+            background: linear-gradient(45deg, #D4AF37, #FDC830);
+            color: #000;
+            width: 100%;
+            padding: 16px;
+            font-size: 19px;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            transition: 0.3s;
+            font-family: 'Gowun Batang', serif;
+        }
+        .btn-gold:active { transform: scale(0.98); }
+
+        /* 로딩 */
+        #loading { display: none; margin-top: 50px; }
+        .crystal-ball {
+            font-size: 70px;
+            margin-bottom: 20px;
+            animation: float 2s infinite ease-in-out;
+            filter: drop-shadow(0 0 10px var(--gold));
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        /* 🃏 3D 타로 카드 영역 */
+        #card-area { display: none; perspective: 1000px; width: 300px; height: 460px; margin: 20px auto; }
+        
+        .card-inner {
+            position: relative; width: 100%; height: 100%; text-align: center;
+            transition: transform 0.8s; transform-style: preserve-3d; cursor: pointer;
+        }
+        .card-inner.flipped { transform: rotateY(180deg); }
+
+        .card-front, .card-back {
+            position: absolute; width: 100%; height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px; border: 2px solid var(--gold);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
 
-        /* 눈 내리는 효과 (CSS만으로 구현) */
-        .snowflake {
+        /* 카드 앞면 */
+        .card-front {
+            background: #1a1a2e;
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+            color: var(--gold);
+        }
+        .card-front h2 { font-size: 50px; margin: 0; opacity: 0.8; }
+        .card-front span { font-size: 14px; margin-top: 10px; opacity: 0.6; }
+
+        /* 카드 뒷면 (결과) */
+        .card-back {
+            background: linear-gradient(135deg, #200122, #6f0000);
+            color: var(--text-light);
+            transform: rotateY(180deg);
+            padding: 25px;
+            border: 2px solid #fff;
+        }
+
+        .result-title { 
+            color: var(--gold); 
+            font-size: 18px; 
+            margin-bottom: 15px; 
+            border-bottom: 1px solid rgba(255,255,255,0.2); 
+            padding-bottom: 10px;
+            width: 100%;
+        }
+        .result-keyword {
+            font-size: 28px;
+            font-weight: bold;
             color: #fff;
-            font-size: 1em;
-            font-family: Arial;
-            text-shadow: 0 0 1px #000;
-            position: fixed;
-            top: -10%;
-            z-index: 9999;
-            user-select: none;
-            cursor: default;
-            animation-name: snowflakes-fall, snowflakes-shake;
-            animation-duration: 10s, 3s;
-            animation-timing-function: linear, ease-in-out;
-            animation-iteration-count: infinite, infinite;
-            animation-play-state: running, running;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
         }
-
-
-        @keyframes snowflakes-fall {
-            0% {
-                top: -10%;
-            }
-
-            100% {
-                top: 100%;
-            }
+        .result-desc { 
+            font-size: 18px; 
+            line-height: 1.6; 
+            opacity: 0.9; 
+            word-break: keep-all; 
         }
+        
+        .click-guide { position: absolute; bottom: 20px; font-size: 12px; opacity: 0.5; animation: blink 2s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
-        @keyframes snowflakes-shake {
-            0% {
-                transform: translateX(0px);
-            }
-
-            50% {
-                transform: translateX(80px);
-            }
-
-            100% {
-                transform: translateX(0px);
-            }
-        }
+        /* 하단 버튼 */
+        .bottom-btns { display: none; gap: 10px; margin-top: 30px; width: 100%; max-width: 300px;}
+        .btn-outline { background: transparent; border: 1px solid var(--gold); color: var(--gold); }
     </style>
 </head>
-
 <body>
-
-    <div class="snow-container" id="snow-container"></div>
+    <div class="stars"></div>
 
     <div class="container">
-        <h1>🎅 2025 크리스마스 🎄<br>나의 운명은?</h1>
-        <p>이름을 입력하면 산타가 미래를 보여줍니다.</p>
+        <div class="header">
+            <h1>2026<br>운명의 타로점 🔮</h1>
+            <p>별들이 말해주는 당신의 내년 운세</p>
+        </div>
 
-        <input type="text" id="username" placeholder="이름 입력 (예: 김코딩)">
-        <button onclick="checkFortune()">결과 확인하기 🎁</button>
+        <div class="input-area" id="input-area">
+            <input type="text" id="username" placeholder="이름을 입력하세요" autocomplete="off">
+            <button class="btn-gold" onclick="startDivination()">운명 카드 뽑기</button>
+        </div>
 
-        <div id="result"></div>
-        <style>
-            .share-btn {
-                background-color: #fee500;
-                /* 카카오 노랑 느낌 */
-                color: #3c1e1e;
-                font-weight: bold;
-                margin-top: 10px;
-                border: 2px solid #ddd;
-            }
+        <div id="loading">
+            <div class="crystal-ball">🔮</div>
+            <p style="color:var(--gold);">우주의 기운을 모으는 중...</p>
+        </div>
 
-            .share-btn:hover {
-                background-color: #fdd835;
-            }
-        </style>
-
-        <button class="share-btn" onclick="shareResult()">📢 친구들에게 결과 자랑하기</button>
-        <div id="ad-area" class="ad-box" style="display:none;">
-            <p style="margin-bottom:5px;">👇 이 결과가 싫다면? 👇</p>
-            <div style="background:#eee; padding:10px; border-radius:5px;">
-                광고: 케이크/선물 미리 준비하기 (링크)
+        <div id="card-area" onclick="flipCard()">
+            <div class="card-inner" id="card-inner">
+                <div class="card-front">
+                    <h2>2026</h2>
+                    <span>터치해서 뒤집기</span>
+                </div>
+                <div class="card-back">
+                    <div class="result-title">THE FATE OF <span id="res-name"></span></div>
+                    <div class="result-keyword" id="res-keyword"></div>
+                    <div class="result-desc" id="res-desc"></div>
+                    
+                    <div class="click-guide">화면을 캡처하여 간직하세요</div>
+                </div>
             </div>
         </div>
+
+        <div class="bottom-btns" id="bottom-btns">
+            <button class="btn-gold btn-outline" onclick="location.reload()">다시하기</button>
+             <button class="btn-gold" onclick="shareResult()">복채로 공유하기</button>
+        </div>
+         <div id="ad-box" style="margin-top:20px; display:none; color: var(--gold); font-size:12px;">
+            👇 당신에게 필요한 행운의 아이템 👇
+            <div style="background:rgba(212, 175, 55, 0.1); height:50px; border:1px solid rgba(212, 175, 55, 0.3); border-radius:5px; line-height:50px; margin-top:5px; color:#aaa;">
+                광고 배너 영역
+            </div>
+       </div>
     </div>
 
     <script>
-        // 눈 내리는 효과 스크립트
-        function createSnow() {
-            const container = document.getElementById('snow-container');
-            const snowflakes = 50; // 눈송이 개수
-            for (let i = 0; i < snowflakes; i++) {
-                const snow = document.createElement('div');
-                snow.innerHTML = '❅';
-                snow.className = 'snowflake';
-                snow.style.left = Math.random() * 100 + '%';
-                snow.style.animationDelay = Math.random() * 10 + 's, ' + Math.random() * 3 + 's';
-                container.appendChild(snow);
-            }
-        }
-        createSnow();
-
-        // 멘트 리스트
-        const christmasFate = [
-            "결과: 🎄 나홀로 집에 '케빈'과 눈싸움 중.",
-            "결과: 🍷 분위기 좋은 바에서 썸남/썸녀와 와인 한 잔.",
-            "결과: 🛌 전기장판 켜고 귤 까먹다가 잠듦 (최고의 휴식).",
-            "결과: 🦄 알바 대타 뛰다가 산타 모자 쓰고 오열함.",
-            "결과: 🍗 치킨 시켰는데 3시간 걸려서 생라면 부셔 먹음.",
-            "결과: 💑 명동 한복판에서 공개 고백 받음 (사람들이 박수 침).",
-            "결과: 🎮 PC방에서 롤 하다가 '메리 크리스마스' 채팅 침.",
-            "결과: 🎂 케이크 사러 갔다가 품절돼서 초코파이에 초 꽂음.",
-            "결과: ✈️ 따뜻한 나라로 도망가서 수영하고 있음.",
-            "결과: 💒 친구 따라 교회 갔다가 간식 두 번 받아 먹음.",
-            "결과: 📱 전여친/전남친 프로필 염탐하다가 실수로 '좋아요' 누름.",
-            "결과: 🎁 로또 샀는데 5등 당첨돼서 본전 찾음.",
-            "결과: ⛷️ 스키장 갔다가 뒹굴어서 눈사람 됨.",
-            "결과: 🐱 고양이한테 루돌프 머리띠 씌우다가 냥냥펀치 맞음.",
-            "결과: 👮 술 먹고 길에서 자다가 경찰차 타고 귀가.",
-            "결과: 산타 할아버지가 선물 안 줘서 굴뚝 막으러 감.",
-            "결과: 루돌프가 아파서 내가 대신 썰매 끌고 있음.",
-            "결과: 교회/성당 가서 간식 두 번 받아 먹음.",
-            "결과: 길 가다가 커플 싸우는 거 구경하느라 팝콘 삼.",
-            "결과: 눈사람 만들다가 너무 잘 만들어서 뉴스 인터뷰함.",
-            "결과: 크리스마스이브에 잤는데 깨보니 2027년임.",
-            "결과: 산타 복장 알바 하는데 애들이 수염 잡아당김.",
-            "결과: 선물로 받은 케이크 혼자 다 먹고 배탈 남.",
-            "결과: 솔로 부대 집회 나가서 '커플 타도' 외침.",
-            "결과: 그냥... 숨 쉼..",
-            "결과: 나홀로 집에 '케빈'과 눈싸움 중.",
-            "결과: 해리포터 전편 정주행하다가 볼드모트랑 정들음.",
-            "결과: 전기장판 위에서 귤 까먹다가 손 노래짐.",
-            "결과: 배달 어플 켰는데 '주문 폭주'로 다 취소당함.",
-            "결과: 크리스마스 특선 영화 보다가 잠들어서 26일에 깸.",
-            "결과: 커플 지옥 솔로 천국을 외치며 PC방에서 라면 먹음.",
-            "결과: 헬스장 가서 '크리스마스엔 하체지' 하며 스쿼트 함.",
-            "결과: 유튜브로 '크리스마스 재즈' 틀어놓고 혼술.",
-            "결과: 냥이/댕댕이 껴안고 '너밖에 없다'며 오열.",
-            "결과: 하루 종일 잠만 잤는데 눈 떠보니 26일 아침.",
-            "결과: 파리바게트/베스킨라빈스 알바하다가 팔 근육 생김.",
-            "결과: 편의점 야간 알바 중",
-            "결과: 사장님이 '크리스마스에 할 거 없지?' 하며 대타 시킴.",
-            "결과: 배달 알바 뛰는데 팁 많이 받아서 금융 치료됨.",
-            "결과: 회사에서 긴급 서버 점검한다고 호출 당함.",
-            "결과: 과제/기말고사 대체 리포트 쓰다가 밤샘.",
-            "결과: 택배 상하차 알바 갔다가 루돌프 체험함.",
-            "결과: 연말 정산 미리 계산하다가 세금 보고 기절.",
-            "결과: 그냥... 평일인 줄 알고 출근할 뻔함.",
-            "결과: 아무도 안 불러줘서 혼자 코인 차트만 보고 있음.",
-            "결과: 썸남/썸녀랑 명동 한복판에서 손 잡고 걸음.",
-            "결과: 예약 전쟁 뚫고 호텔 뷔페에서 칼질 중.",
-            "결과: 눈 내리는 거리에서 고백 받음 (성공률 100%).",
-            "결과: 남자친구/여자친구랑 인생네컷 찍다가 뽀뽀함.",
-            "결과: 차 트렁크 열었는데 풍선 날아오고 프러포즈 받음.",
-            "결과: 스키장에서 보드 타다가 넘어졌는데 운명의 상대를 만남.",
-            "결과: 롯데월드/에버랜드 폐장 시간까지 데이트.",
-            "결과: 성심당 케이크 들고 썸녀 집 앞에 서 있음.",
-            "결과: 서로 목도리 매주며 '아프지 마' 시전 중.",
-
-            // ... 위에 적어드린 멘트 더 추가하세요!
+        // 🔮 2026년 신년 운세 데이터베이스 (50개)
+        const fortunes = [
+            { k: "대박의 기운", d: "숨만 쉬어도 통장에 돈이 쌓이는 해. 로또를 사도 좋습니다." },
+            { k: "새로운 인연", d: "평생을 함께할 귀인이 나타납니다. 사람을 귀하게 여기세요." },
+            { k: "도약의 시기", d: "준비했던 모든 일이 결실을 맺습니다. 두려워 말고 저지르세요." },
+            { k: "인기 폭발", d: "어딜 가나 주인공이 되는 해. 당신의 매력이 만천하에 드러납니다." },
+            { k: "건강 회복", d: "지쳤던 몸과 마음이 씻은 듯이 낫습니다. 최고의 컨디션을 되찾습니다." },
+            { k: "뜻밖의 행운", d: "길을 걷다 돈을 줍는 수준의 행운이 따릅니다. 기대해도 좋습니다." },
+            { k: "승진과 합격", d: "시험, 면접, 승진... 원하는 자리가 당신을 기다리고 있습니다." },
+            { k: "사랑의 결실", d: "짝사랑이 이루어지거나, 연인과 더 깊은 관계로 발전합니다." },
+            { k: "재능 발견", d: "몰랐던 당신의 재능이 빛을 발합니다. 새로운 취미를 시작해보세요." },
+            { k: "여행의 운", d: "떠나면 얻으리라. 낯선 곳에서 인생의 해답을 찾게 됩니다." },
+            { k: "문서운 상승", d: "부동산이나 계약 관련해서 아주 좋은 소식이 들려옵니다." },
+            { k: "과거 청산", d: "골치 아팠던 문제들이 눈 녹듯 사라집니다. 마음의 평화가 옵니다." },
+            { k: "터닝 포인트", d: "인생이 180도 바뀌는 사건이 생깁니다. 물론 아주 긍정적인 쪽으로요." },
+            { k: "리더의 자질", d: "사람들이 당신을 따릅니다. 무리의 중심에서 능력을 발휘하세요." },
+            { k: "금전적 여유", d: "사고 싶었던 것을 가격표 안 보고 살 수 있는 여유가 생깁니다." },
+            { k: "화해와 용서", d: "멀어졌던 사람과 다시 가까워집니다. 관계가 회복되는 해입니다." },
+            { k: "창의력 폭발", d: "아이디어가 샘솟습니다. 메모하는 습관이 당신을 부자로 만듭니다." },
+            { k: "내 집 마련", d: "안정적인 보금자리를 얻을 운이 강하게 들어옵니다." },
+            { k: "다이어트 성공", d: "원하는 몸매를 얻게 됩니다. 이번에는 작심삼일이 아닙니다." },
+            { k: "해외 진출", d: "활동 무대가 넓어집니다. 외국어 공부를 시작하면 좋습니다." },
+            { k: "가정의 평화", d: "집안에 웃음소리가 끊이지 않습니다. 행복은 가까이에 있습니다." },
+            { k: "자존감 상승", d: "자신을 진정으로 사랑하게 됩니다. 멘탈이 강철처럼 단단해집니다." },
+            { k: "뜻밖의 조력자", d: "혼자 끙끙 앓던 일을 누군가 시원하게 해결해 줍니다." },
+            { k: "솔로 탈출", d: "외로움 끝, 행복 시작. 당신을 아껴줄 사람이 나타납니다." },
+            { k: "나만의 사업", d: "내 이름으로 된 무언가를 시작하기 딱 좋은 시기입니다." },
+            { k: "학업 성취", d: "머리가 비상하게 돌아갑니다. 공부하는 족족 내 것이 됩니다." },
+            { k: "완벽한 휴식", d: "치열하게 산 당신, 걱정 없이 푹 쉴 수 있는 기회가 옵니다." },
+            { k: "미모 갱신", d: "올해따라 '예뻐졌다/잘생겨졌다'는 말을 지겹도록 듣게 됩니다." },
+            { k: "나쁜 습관 손절", d: "술, 담배, 게으름... 당신을 갉아먹던 것들과 이별하게 됩니다." },
+            { k: "유명세", d: "SNS나 커뮤니티에서 유명해질 수 있습니다. 말조심은 필수!" },
+            { k: "투자의 귀재", d: "당신의 감이 적중합니다. 다만 욕심은 금물입니다." },
+            { k: "오해 해소", d: "당신을 둘러싼 나쁜 소문이나 오해가 깨끗하게 풀립니다." },
+            { k: "예술적 영감", d: "글, 그림, 음악 등 예술적 감각이 최고조에 달합니다." },
+            { k: "소원 성취", d: "간절히 바라던 소원 하나가 기적처럼 이루어집니다." },
+            { k: "용기 있는 선택", d: "망설이던 일에 뛰어들게 되고, 그 선택은 정답이 됩니다." },
+            { k: "경쟁 승리", d: "라이벌을 제치고 독보적인 위치에 오릅니다." },
+            { k: "깊은 깨달음", d: "삶을 대하는 태도가 성숙해집니다. 어른이 되어가는 해입니다." },
+            { k: "끊임없는 웃음", d: "별일 아닌 일에도 웃음이 나는, 즐거운 한 해가 됩니다." },
+            { k: "선물 공세", d: "주변 사람들로부터 물질적, 정신적 선물을 많이 받게 됩니다." },
+            { k: "스피드 업", d: "지지부진하던 일들이 속도를 내어 빠르게 해결됩니다." },
+            { k: "안전 운행", d: "큰 사고나 병치레 없이 무탈하고 건강하게 지나갑니다." },
+            { k: "감동의 순간", d: "눈물 핑 도는 감동적인 이벤트를 겪게 됩니다." },
+            { k: "철벽 방어", d: "사기나 나쁜 유혹으로부터 안전하게 자신을 지켜냅니다." },
+            { k: "맛있는 인생", d: "가는 곳마다 맛집이고, 먹는 복이 터지는 해입니다." },
+            { k: "새로운 가족", d: "반려동물을 맞이하거나, 가족 구성원이 늘어날 수 있습니다." },
+            { k: "쇼핑 성공", d: "사는 물건마다 꿀템이고 가격도 오르는 기이한 현상." },
+            { k: "꿀잠의 축복", d: "불면증이 사라지고 매일 아침이 개운합니다." },
+            { k: "칭찬 감옥", d: "주변에서 당신을 칭찬하느라 가만히 두질 않습니다." },
+            { k: "무한 긍정", d: "어떤 시련이 와도 긍정적으로 이겨내는 멘탈갑이 됩니다." },
+            { k: "주인공은 너", d: "2026년이라는 영화의 주연 배우는 바로 당신입니다." }
         ];
 
-        function checkFortune() {
+        let isResultReady = false;
+
+        function startDivination() {
             const name = document.getElementById('username').value;
-            if (!name) {
-                alert("산타 할아버지는 이름 모르는 사람에겐 선물을 안 줘요!");
-                return;
-            }
+            if(!name) return alert('이름을 알려주세요.');
 
-            // 이름 기반 해시 (항상 같은 결과 나오게)
-            let sum = 0;
-            for (let i = 0; i < name.length; i++) {
-                sum += name.charCodeAt(i);
-            }
-            const index = sum % christmasFate.length;
-            const selectedFate = christmasFate[index];
+            // UI 전환
+            document.getElementById('input-area').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
 
-            // 결과 출력
-            const resultDiv = document.getElementById('result');
-            const adArea = document.getElementById('ad-area');
+            // 결과 준비
+            prepareResult(name);
 
-            resultDiv.style.display = 'block';
-            resultDiv.innerHTML = `<span style="color:#a4193d; font-size:24px;">${name}</span>님의<br>크리스마스 운명은?<br><br>${selectedFate}`;
-
-            adArea.style.display = 'block'; // 광고도 같이 띄우기
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('card-area').style.display = 'block';
+                isResultReady = true; // 이제 카드 뒤집기 가능
+            }, 2000); 
         }
+
+        function prepareResult(name) {
+            let sum = 0;
+            for(let i=0; i<name.length; i++) sum += name.charCodeAt(i);
+            
+            // 이름에 따라 랜덤하지만 고정된 결과
+            const idx = sum % fortunes.length;
+            const fate = fortunes[idx];
+            
+            document.getElementById('res-name').innerText = name;
+            document.getElementById('res-keyword').innerText = fate.k; // 키워드 (예: 대박의 기운)
+            document.getElementById('res-desc').innerText = fate.d;    // 설명
+        }
+
+        function flipCard() {
+            if(!isResultReady) return;
+            document.getElementById('card-inner').classList.add('flipped');
+            setTimeout(() => {
+                 document.getElementById('bottom-btns').style.display = 'flex';
+                 document.getElementById('ad-box').style.display = 'block';
+            }, 800);
+        }
+
         function shareResult() {
-            // 1. 현재 결과 텍스트 가져오기
-            const resultText = document.getElementById('result').innerText;
-
-            // 결과가 아직 안 나왔으면 알림 뜨고 종료
-            if (!resultText) {
-                alert("먼저 이름을 입력하고 결과를 확인해주세요!");
-                return;
-            }
-
-            // 2. 공유할 데이터 설정 (따옴표 추가함!)
-            const shareData = {
-                title: '2026년 크리스마스 운세',
-                text: resultText + "\n\n너도 한번 해봐! 👇",
-                url: window.location.href // 자동으로 현재 주소를 가져옵니다 (추천)
-            };
-
-            // 3. 네이티브 공유하기 (HTTPS 필수)
-            if (navigator.share) {
-                navigator.share(shareData)
-                    .then(() => console.log('공유 성공'))
-                    .catch((error) => console.log('공유 실패', error));
+            const keyword = document.getElementById('res-keyword').innerText;
+            const desc = document.getElementById('res-desc').innerText;
+             if (navigator.share) {
+                navigator.share({
+                    title: '2026년 신년 운세 타로',
+                    text: `[${keyword}]\n${desc}\n\n내 2026년 운세 확인하기 👇`,
+                    url: window.location.href
+                });
             } else {
-                // 4. 공유 기능 미지원 시 (PC 또는 HTTP 환경) -> 구식 복사 방법 사용
-                // (http에서도 작동하도록 구형 방식과 신형 방식을 섞어서 처리)
-                const tempInput = document.createElement("textarea");
-                document.body.appendChild(tempInput);
-                tempInput.value = window.location.href + "\n\n" + resultText;
-                tempInput.select();
-                document.execCommand("copy"); // 구형 브라우저 호환
-                document.body.removeChild(tempInput);
-
-                alert("결과가 복사되었습니다! (카톡에 붙여넣기 하세요)");
+                alert("주소가 복사되었습니다.");
             }
         }
     </script>
 </body>
-
 </html>
