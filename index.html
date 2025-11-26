@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎄 올해 크리스마스에 나는? 🎄</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: 'GmarketSansMedium', sans-serif;
+            background-color: #a4193d;
+            /* 크리스마스 레드 */
+            color: #fff;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: #fff;
+            color: #333;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 10;
+            border: 5px solid #2f5a2d;
+            /* 크리스마스 그린 */
+        }
+
+        h1 {
+            color: #a4193d;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #2f5a2d;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 15px;
+            width: 80%;
+            margin: 15px 0;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #2f5a2d;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #244422;
+            transform: scale(1.02);
+        }
+
+        #result {
+            margin-top: 25px;
+            font-size: 22px;
+            font-weight: bold;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            display: none;
+            background-color: #f0fff4;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px dashed #2f5a2d;
+        }
+
+        .ad-box {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* 눈 내리는 효과 (CSS만으로 구현) */
+        .snowflake {
+            color: #fff;
+            font-size: 1em;
+            font-family: Arial;
+            text-shadow: 0 0 1px #000;
+            position: fixed;
+            top: -10%;
+            z-index: 9999;
+            user-select: none;
+            cursor: default;
+            animation-name: snowflakes-fall, snowflakes-shake;
+            animation-duration: 10s, 3s;
+            animation-timing-function: linear, ease-in-out;
+            animation-iteration-count: infinite, infinite;
+            animation-play-state: running, running;
+        }
+
+
+        @keyframes snowflakes-fall {
+            0% {
+                top: -10%;
+            }
+
+            100% {
+                top: 100%;
+            }
+        }
+
+        @keyframes snowflakes-shake {
+            0% {
+                transform: translateX(0px);
+            }
+
+            50% {
+                transform: translateX(80px);
+            }
+
+            100% {
+                transform: translateX(0px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="snow-container" id="snow-container"></div>
+
+    <div class="container">
+        <h1>🎅 2025 크리스마스 🎄<br>나의 운명은?</h1>
+        <p>이름을 입력하면 산타가 미래를 보여줍니다.</p>
+
+        <input type="text" id="username" placeholder="이름 입력 (예: 김코딩)">
+        <button onclick="checkFortune()">결과 확인하기 🎁</button>
+
+        <div id="result"></div>
+        <style>
+            .share-btn {
+                background-color: #fee500;
+                /* 카카오 노랑 느낌 */
+                color: #3c1e1e;
+                font-weight: bold;
+                margin-top: 10px;
+                border: 2px solid #ddd;
+            }
+
+            .share-btn:hover {
+                background-color: #fdd835;
+            }
+        </style>
+
+        <button class="share-btn" onclick="shareResult()">📢 친구들에게 결과 자랑하기</button>
+        <div id="ad-area" class="ad-box" style="display:none;">
+            <p style="margin-bottom:5px;">👇 이 결과가 싫다면? 👇</p>
+            <div style="background:#eee; padding:10px; border-radius:5px;">
+                광고: 케이크/선물 미리 준비하기 (링크)
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 눈 내리는 효과 스크립트
+        function createSnow() {
+            const container = document.getElementById('snow-container');
+            const snowflakes = 50; // 눈송이 개수
+            for (let i = 0; i < snowflakes; i++) {
+                const snow = document.createElement('div');
+                snow.innerHTML = '❅';
+                snow.className = 'snowflake';
+                snow.style.left = Math.random() * 100 + '%';
+                snow.style.animationDelay = Math.random() * 10 + 's, ' + Math.random() * 3 + 's';
+                container.appendChild(snow);
+            }
+        }
+        createSnow();
+
+        // 멘트 리스트
+        const christmasFate = [
+            "결과: 🎄 나홀로 집에 '케빈'과 눈싸움 중.",
+            "결과: 🍷 분위기 좋은 바에서 썸남/썸녀와 와인 한 잔.",
+            "결과: 🛌 전기장판 켜고 귤 까먹다가 잠듦 (최고의 휴식).",
+            "결과: 🦄 알바 대타 뛰다가 산타 모자 쓰고 오열함.",
+            "결과: 🍗 치킨 시켰는데 3시간 걸려서 생라면 부셔 먹음.",
+            "결과: 💑 명동 한복판에서 공개 고백 받음 (사람들이 박수 침).",
+            "결과: 🎮 PC방에서 롤 하다가 '메리 크리스마스' 채팅 침.",
+            "결과: 🎂 케이크 사러 갔다가 품절돼서 초코파이에 초 꽂음.",
+            "결과: ✈️ 따뜻한 나라로 도망가서 수영하고 있음.",
+            "결과: 💒 친구 따라 교회 갔다가 간식 두 번 받아 먹음.",
+            "결과: 📱 전여친/전남친 프로필 염탐하다가 실수로 '좋아요' 누름.",
+            "결과: 🎁 로또 샀는데 5등 당첨돼서 본전 찾음.",
+            "결과: ⛷️ 스키장 갔다가 뒹굴어서 눈사람 됨.",
+            "결과: 🐱 고양이한테 루돌프 머리띠 씌우다가 냥냥펀치 맞음.",
+            "결과: 👮 술 먹고 길에서 자다가 경찰차 타고 귀가.",
+            "결과: 산타 할아버지가 선물 안 줘서 굴뚝 막으러 감.",
+            "결과: 루돌프가 아파서 내가 대신 썰매 끌고 있음.",
+            "결과: 교회/성당 가서 간식 두 번 받아 먹음.",
+            "결과: 길 가다가 커플 싸우는 거 구경하느라 팝콘 삼.",
+            "결과: 눈사람 만들다가 너무 잘 만들어서 뉴스 인터뷰함.",
+            "결과: 크리스마스이브에 잤는데 깨보니 2027년임.",
+            "결과: 산타 복장 알바 하는데 애들이 수염 잡아당김.",
+            "결과: 선물로 받은 케이크 혼자 다 먹고 배탈 남.",
+            "결과: 솔로 부대 집회 나가서 '커플 타도' 외침.",
+            "결과: 그냥... 숨 쉼..",
+            "결과: 나홀로 집에 '케빈'과 눈싸움 중.",
+            "결과: 해리포터 전편 정주행하다가 볼드모트랑 정들음.",
+            "결과: 전기장판 위에서 귤 까먹다가 손 노래짐.",
+            "결과: 배달 어플 켰는데 '주문 폭주'로 다 취소당함.",
+            "결과: 크리스마스 특선 영화 보다가 잠들어서 26일에 깸.",
+            "결과: 커플 지옥 솔로 천국을 외치며 PC방에서 라면 먹음.",
+            "결과: 헬스장 가서 '크리스마스엔 하체지' 하며 스쿼트 함.",
+            "결과: 유튜브로 '크리스마스 재즈' 틀어놓고 혼술.",
+            "결과: 냥이/댕댕이 껴안고 '너밖에 없다'며 오열.",
+            "결과: 하루 종일 잠만 잤는데 눈 떠보니 26일 아침.",
+            "결과: 파리바게트/베스킨라빈스 알바하다가 팔 근육 생김.",
+            "결과: 편의점 야간 알바 중",
+            "결과: 사장님이 '크리스마스에 할 거 없지?' 하며 대타 시킴.",
+            "결과: 배달 알바 뛰는데 팁 많이 받아서 금융 치료됨.",
+            "결과: 회사에서 긴급 서버 점검한다고 호출 당함.",
+            "결과: 과제/기말고사 대체 리포트 쓰다가 밤샘.",
+            "결과: 택배 상하차 알바 갔다가 루돌프 체험함.",
+            "결과: 연말 정산 미리 계산하다가 세금 보고 기절.",
+            "결과: 그냥... 평일인 줄 알고 출근할 뻔함.",
+            "결과: 아무도 안 불러줘서 혼자 코인 차트만 보고 있음.",
+            "결과: 썸남/썸녀랑 명동 한복판에서 손 잡고 걸음.",
+            "결과: 예약 전쟁 뚫고 호텔 뷔페에서 칼질 중.",
+            "결과: 눈 내리는 거리에서 고백 받음 (성공률 100%).",
+            "결과: 남자친구/여자친구랑 인생네컷 찍다가 뽀뽀함.",
+            "결과: 차 트렁크 열었는데 풍선 날아오고 프러포즈 받음.",
+            "결과: 스키장에서 보드 타다가 넘어졌는데 운명의 상대를 만남.",
+            "결과: 롯데월드/에버랜드 폐장 시간까지 데이트.",
+            "결과: 성심당 케이크 들고 썸녀 집 앞에 서 있음.",
+            "결과: 서로 목도리 매주며 '아프지 마' 시전 중.",
+
+            // ... 위에 적어드린 멘트 더 추가하세요!
+        ];
+
+        function checkFortune() {
+            const name = document.getElementById('username').value;
+            if (!name) {
+                alert("산타 할아버지는 이름 모르는 사람에겐 선물을 안 줘요!");
+                return;
+            }
+
+            // 이름 기반 해시 (항상 같은 결과 나오게)
+            let sum = 0;
+            for (let i = 0; i < name.length; i++) {
+                sum += name.charCodeAt(i);
+            }
+            const index = sum % christmasFate.length;
+            const selectedFate = christmasFate[index];
+
+            // 결과 출력
+            const resultDiv = document.getElementById('result');
+            const adArea = document.getElementById('ad-area');
+
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `<span style="color:#a4193d; font-size:24px;">${name}</span>님의<br>크리스마스 운명은?<br><br>${selectedFate}`;
+
+            adArea.style.display = 'block'; // 광고도 같이 띄우기
+        }
+        function shareResult() {
+            // 1. 현재 결과 텍스트 가져오기 (결과가 없으면 기본 멘트)
+            const resultText = document.getElementById('result').innerText || "내 2026년 운세를 확인해보세요!";
+
+            // 2. 공유할 데이터 설정
+            const shareData = {
+                title: '2026년 텅장 예언 / 크리스마스 운세',
+                text: resultText + "\n\n너도 한번 해봐! 👇",
+                url: uirml.dothome.co.kr // 현재 사이트 주소,
+            }
+
+            // 3. 네이티브 공유하기 (모바일 중심)
+            if (navigator.share) {
+                navigator.share(shareData)
+                    .then(() => console.log('공유 성공'))
+                    .catch((error) => console.log('공유 실패', error));
+            } else {
+                // 4. PC 등 공유 기능이 없는 경우 -> 클립보드에 주소 복사
+                navigator.clipboard.writeText(window.location.href + "\n\n" + resultText)
+                    .then(() => alert("결과와 주소가 복사되었습니다! 카톡방에 붙여넣기 하세요."))
+                    .catch(() => alert("복사하기를 지원하지 않는 브라우저입니다."));
+            }
+        }
+    </script>
+</body>
+
+</html>
