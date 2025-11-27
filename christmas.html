@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🎄 2025 CHRISTMAS FATE</title>
+    
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <style>
+        :root {
+            --bg-start: #1a0b0b; /* 아주 어두운 와인색 */
+            --bg-end: #3a0000;   /* 딥 레드 */
+            --gold: #D4AF37;     /* 차분한 골드 */
+            --cream: #fffcf5;    /* 크림색 종이 */
+            --green: #0f3d0f;    /* 딥 그린 */
+        }
+
+        * { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+
+        body { 
+            margin: 0; padding: 20px; font-family: 'Pretendard', sans-serif;
+            background: radial-gradient(circle at center top, var(--bg-end), var(--bg-start));
+            min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            overflow-x: hidden; position: relative;
+        }
+
+        /* 눈 내리는 효과 */
+        .snow-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .snowflake { 
+            position: absolute; top: -10px; color: rgba(255,255,255,0.6); 
+            animation: fall linear infinite; text-shadow: 0 0 5px rgba(255,255,255,0.3);
+        }
+        @keyframes fall { to { transform: translateY(100vh); } }
+
+        .container { width: 100%; max-width: 400px; padding: 0; position: relative; z-index: 10; text-align: center; }
+
+        /* 메인 타이틀 (고급스럽게) */
+        .header h1 { 
+            font-family: 'Do Hyeon', sans-serif; font-size: 40px; margin: 0; color: #fff;
+            text-shadow: 0 0 20px var(--gold); letter-spacing: 2px;
+        }
+        .header p { 
+            font-size: 15px; color: var(--gold); margin-top: 10px; 
+            opacity: 0.9; font-weight: 300; letter-spacing: 1px;
+        }
+
+        /* 입력 카드 */
+        .input-card {
+            background: var(--cream); padding: 40px 30px; border-radius: 20px;
+            border: 3px solid var(--gold); 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            position: relative; margin-top: 35px;
+        }
+        .input-card::before {
+            content: '🎅'; position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
+            font-size: 50px; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+        }
+
+        .input-group { margin: 30px 0; }
+        input {
+            width: 100%; padding: 12px 0; font-size: 22px; border: none; 
+            border-bottom: 2px solid var(--gold); background: transparent; 
+            text-align: center; font-family: 'Gowun Batang', serif; font-weight: bold;
+            color: var(--green); border-radius: 0;
+        }
+        input:focus { outline: none; border-bottom: 2px solid var(--bg-end); }
+        input::placeholder { color: #bbb; font-family: 'Pretendard'; font-size: 16px; font-weight: normal;}
+
+        /* 버튼 (클래식한 느낌) */
+        .btn-primary {
+            background: linear-gradient(to bottom, var(--green), #0a2a0a); color: var(--gold);
+            width: 100%; padding: 16px; border-radius: 50px; font-size: 20px; 
+            font-family: 'Do Hyeon', sans-serif;
+            border: 2px solid var(--gold); cursor: pointer; transition: 0.2s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .btn-primary:active { transform: translateY(3px); box-shadow: none; }
+
+        /* 로딩 */
+        #loading { display: none; margin-top: 30px; }
+        .gift-box { font-size: 60px; animation: shake 1s infinite ease-in-out; display: inline-block; }
+        @keyframes shake { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(5deg); } 75% { transform: rotate(-5deg); } }
+
+        /* 결과 영수증 스타일 */
+        #result-area { display: none; margin-top: 20px; animation: slideUp 0.6s ease-out; }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .receipt {
+            background: var(--cream); padding: 40px 25px 50px; position: relative;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 95% 98%, 90% 100%, 85% 98%, 80% 100%, 75% 98%, 70% 100%, 65% 98%, 60% 100%, 55% 98%, 50% 100%, 45% 98%, 40% 100%, 35% 98%, 30% 100%, 25% 98%, 20% 100%, 15% 98%, 10% 100%, 5% 98%, 0% 100%);
+            border-top: 5px solid var(--gold);
+        }
+        
+        .receipt-header { text-align: center; border-bottom: 2px dashed var(--gold); padding-bottom: 20px; margin-bottom: 25px; margin-top: 20px; }
+        .receipt-title { font-family: 'Do Hyeon', sans-serif; font-size: 16px; color: var(--green); letter-spacing: 3px; margin-bottom: 10px; }
+        .user-name-display { font-family: 'Gowun Batang', serif; font-weight: bold; font-size: 28px; color: #8E0E00; }
+        
+        .fate-result { 
+            font-size: 20px; line-height: 1.6; color: #333; text-align: center; 
+            font-weight: bold; padding: 15px 10px; word-break: keep-all; 
+            background: rgba(212, 175, 55, 0.1); border-radius: 10px; font-family: 'Gowun Batang', serif;
+        }
+
+        /* 🔥 [수정됨] 버튼 그룹 (저장/공유 분리) */
+        .btn-group { margin-top: 25px; display: flex; gap: 10px; }
+        .btn-save { 
+            flex: 1; padding: 15px; border-radius: 15px; border: 2px solid var(--gold); 
+            background: var(--gold); color: #000;
+            font-weight: bold; cursor: pointer; font-size: 16px; font-family: 'Do Hyeon', sans-serif; 
+            transition: 0.2s; box-shadow: 0 4px 0 rgba(0,0,0,0.2); 
+        }
+        .btn-share { 
+            flex: 1; padding: 15px; border-radius: 15px; border: 2px solid var(--green); 
+            background: var(--green); color: #fff;
+            font-weight: bold; cursor: pointer; font-size: 16px; font-family: 'Do Hyeon', sans-serif; 
+            transition: 0.2s; box-shadow: 0 4px 0 rgba(0,0,0,0.2); 
+        }
+        .btn-retry {
+            width: 100%; margin-top: 10px; padding: 12px; background: transparent; 
+            border: 1px solid rgba(0,0,0,0.2); border-radius: 10px; color: #666; cursor: pointer;
+        }
+        .btn-save:active, .btn-share:active { transform: translateY(4px); box-shadow: none; }
+
+        /* 쿠팡 박스 */
+        .coupang-box { 
+            margin-top: 25px; border: 1px solid rgba(0,0,0,0.1); padding: 15px; 
+            background: #fff; border-radius: 12px; 
+        }
+        .coupang-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            text-decoration: none; padding: 12px; border-radius: 8px; 
+            font-weight: bold; font-size: 14px; margin-bottom: 8px; 
+            font-family: 'Pretendard'; transition: 0.2s;
+        }
+        .coupang-btn:hover { transform: scale(1.02); }
+        .btn-red { background: linear-gradient(45deg, #d63031, #e17055); color: #fff; }
+        .btn-gold { background: linear-gradient(45deg, #fdcb6e, #ffeaa7); color: #444; }
+
+     
+        #capture-target {
+            position: fixed; top: -9999px; left: -9999px; 
+            width: 360px; height: 640px; 
+            /* 배경: 고급진 와인색 */
+            background: linear-gradient(to bottom, #1a0b0b, #3a0000);
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+            /* 테두리: 골드 이중선 */
+            border: 8px double #D4AF37;
+            padding: 40px 30px; box-sizing: border-box;
+            display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+            text-align: center; font-family: 'Gowun Batang', serif;
+        }
+
+        .cap-header .cap-subtitle { color: #D4AF37; font-size: 13px; letter-spacing: 3px; margin-bottom: 5px; opacity: 0.8; }
+        .cap-header .cap-title { color: #fff; font-size: 26px; font-weight: bold; text-shadow: 0 0 15px #ff0000; margin: 0; font-family: 'Do Hyeon', sans-serif; }
+        
+        .cap-card-visual {
+            width: 100%; flex-grow: 1; margin: 25px 0;
+            background: rgba(255, 252, 240, 0.96); /* 진한 크림색 */
+            border: 2px solid #D4AF37; border-radius: 15px;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.2); /* 금빛 후광 */
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 30px 20px; position: relative;
+        }
+        
+        /* 카드 장식 */
+        .cap-card-visual::before { content: '🎄'; position: absolute; top: 15px; left: 15px; font-size: 22px; }
+        .cap-card-visual::after { content: '🎁'; position: absolute; bottom: 15px; right: 15px; font-size: 22px; }
+
+        /* 🔥 [추가] 멘트 (명조체로 진지하게) */
+        .cap-question { 
+            font-size: 20px; color: #333; margin-bottom: 20px; line-height: 1.4; font-weight: bold;
+        }
+        .cap-question span { 
+            color: #8E0E00; font-size: 24px; 
+            border-bottom: 2px solid #D4AF37; padding-bottom: 2px; margin: 0 4px;
+        }
+
+        /* 키워드 */
+        .cap-keyword { 
+            font-size: 32px; /* 적당히 큼 */
+            color: #0f3d0f; font-weight: bold; margin-bottom: 20px; 
+            line-height: 1.3; text-shadow: 1px 1px 0 #D4AF37;
+        }
+        .cap-desc { 
+            font-size: 16px; color: #444; line-height: 1.6; word-break: keep-all; 
+            font-weight: bold; opacity: 0.9;
+        }
+        
+        .cap-footer { color: rgba(255,255,255,0.5); font-size: 12px; letter-spacing: 1px; }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="snow-container" id="snow-container"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>2025<br>CHRISTMAS</h1>
+            <p>🎄 산타가 알려주는 당신의 운명은? 🎅</p>
+        </div>
+
+        <div class="input-card" id="input-card">
+            <div class="input-group">
+                <input type="text" id="username" placeholder="이름을 입력하세요" autocomplete="off">
+            </div>
+            <button class="btn-primary" onclick="startAnalysis()">운명 확인하기 🎁</button>
+        </div>
+
+        <div id="loading">
+            <div class="gift-box">🎅🎁🎄</div>
+            <p style="color:#fff; font-weight:bold; margin-top:15px; font-size: 18px; text-shadow: 0 0 10px gold;">명부를 확인하고 있습니다...</p>
+        </div>
+
+        <div id="result-area">
+            <div class="receipt">
+                <div class="receipt-header">
+                    <div class="receipt-title">🎅 SANTA'S OFFICIAL RECEIPT 🎅</div>
+                    <div class="user-name-display" id="display-name">홍길동</div>
+                    <div style="font-size:13px; color:#888; margin-top:8px;">DATE: 2025-12-25</div>
+                </div>
+
+                <div class="fate-result" id="fate-text"></div>
+
+                <div class="coupang-box">
+                    <p style="font-size:13px; color:#0f3d0f; font-weight:bold; margin-bottom:10px; text-align: center;">👇 산타가 주는 선물 (클릭) 👇</p>
+                    <a href="https://link.coupang.com/a/c7ZF8I" target="_blank" class="coupang-btn btn-red">
+                        <span>🎂</span> 크리스마스 파티 준비
+                    </a>
+                    <a href="https://link.coupang.com/a/c7ZCjV" target="_blank" class="coupang-btn btn-gold">
+                        <span>🎁</span> 나의 2026 행운템
+                    </a>
+                    <p style="font-size:10px; color:#aaa; margin-top:5px; text-align: center;">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn-save" onclick="saveImage()">💾 이미지 저장</button>
+                <button class="btn-share" onclick="shareLink()">🔗 링크 공유</button>
+            </div>
+            <button class="btn-retry" onclick="location.reload()">↺ 다시하기</button>
+        </div>
+    </div>
+
+    <div id="capture-target">
+        <div class="cap-header">
+            <div class="cap-subtitle">2025 PREVIEW</div>
+            <div class="cap-title">CHRISTMAS FATE 🎄</div>
+        </div>
+
+        <div class="cap-card-visual">
+            <div class="cap-question">
+                크리스마스에<br>
+                <span id="cap-name">홍길동</span>님의 모습은?
+            </div>
+
+            <div class="cap-keyword" id="cap-keyword">나홀로 집에</div>
+            <div class="cap-desc" id="cap-desc">설명 텍스트입니다.</div>
+        </div>
+        
+        <div class="cap-footer">
+            당신의 크리스마스를 확인해보세요 | www.simsimu.com
+        </div>
+    </div>
+
+    <script>
+        // 눈송이 스크립트
+        const snowContainer = document.getElementById('snow-container');
+        const snowflakeChars = ['❄', '❅', '❆', '•'];
+        for(let i=0; i<40; i++){
+            const div = document.createElement('div');
+            div.className = 'snowflake';
+            div.textContent = snowflakeChars[Math.floor(Math.random() * snowflakeChars.length)];
+            div.style.left = Math.random() * 100 + '%';
+            div.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            div.style.animationDelay = (Math.random() * 5) + 's';
+            div.style.opacity = Math.random() * 0.6 + 0.4;
+            div.style.fontSize = (Math.random() * 10 + 10) + 'px';
+            snowContainer.appendChild(div);
+        }
+
+        const db = [
+    // --- 🏠 솔로/집순이/집돌이 (국룰) ---
+    "결과: 🎄 나홀로 집에 '케빈'과 눈싸움 중 (매년 보는 사이).",
+    "결과: 🧙‍♂️ 해리포터 전편 정주행하다가 호그와트 입학 통지서 기다림.",
+    "결과: 🍊 전기장판과 한몸이 되어 귤 까먹다가 손 노래짐.",
+    "결과: 🛌 자고 일어났더니 12월 26일 (시간 삭제 마법).",
+    "결과: 📺 넷플릭스 썸네일만 2시간 고르다가 결국 무한도전 봄.",
+    "결과: 🍜 컵라면 물 부어놓고 김치 찾다가 3분 지남.",
+    "결과: 📱 인스타 스토리 염탐하다가 실수로 전여친/전남친 하트 누름.",
+    "결과: 🎮 PC방에서 롤 하다가 '크리스마스 이벤트' 당첨됨.",
+    "결과: 🧹 대청소하다가 옛날 일기장 발견하고 이불킥.",
+    "결과: 🐱 고양이한테 루돌프 머리띠 씌우려다 냥냥펀치 맞음.",
+    "결과: 🐶 강아지랑 산책하다가 커플 사이로 지나감.",
+    "결과: 🍗 배달 치킨 시켰는데 3시간 걸려서 생라면 부셔 먹음.",
+    "결과: 🍺 혼술 하다가 감성에 젖어 옛날 노래 부름.",
+    "결과: 💇‍♂️ 미용실 갔다가 머리 망하고 집 밖으로 안 나감.",
+    "결과: 🛁 거품 목욕한다고 입욕제 넣었다가 욕조 청소만 1시간.",
+    "결과: 📉 비트코인 차트 보다가 크리스마스 지나감.",
+    "결과: 🏋️ 헬스장 눈치 게임 성공! 아무도 없어서 혼자 운동함.",
+    "결과: 📚 내일 시험/과제 벼락치기 하다가 멘탈 나감.",
+    "결과: 🛒 쿠팡으로 나를 위한 선물 샀는데 배송 지연됨.",
+    "결과: 🛌 하루 종일 잠만 잤는데 꿈에서도 솔로임.",
+    "결과: 🤳 집에서 풀메이크업 하고 셀카 500장 찍고 지움.",
+    "결과: 🧱 레고 조립하다가 중요 부품 하나 없어져서 오열.",
+    "결과: 🕯️ 향초 켰다가 분위기 너무 좋아서 혼자 청승 떰.",
+    "결과: 🍫 초콜릿 먹다가 충치 아파서 치과 검색함.",
+    "결과: 👖 작년에 입던 바지 입어봤는데 단추 터짐 (살찜).",
+    "결과: 💇‍♀️ 앞머리 자르다가 처피뱅 돼서 모자 쓰고 다님.",
+    "결과: 📦 당근마켓 거래하러 나갔다가 쿨거래 하고 옴.",
+    "결과: 🥣 시리얼 먹는데 우유 없어서 오렌지 주스에 말아먹음.",
+    "결과: 🧩 퍼즐 1000피스 맞추다가 목 디스크 올 뻔함.",
+    "결과: 🎤 코인노래방 가서 슬픈 발라드만 부르다 옴.",
+
+    // --- ❤️ 커플/썸/로맨스 (희망편 vs 절망편) ---
+    "결과: 🍷 분위기 좋은 바에서 썸남/썸녀와 와인 한 잔.",
+    "결과: 🎡 롯데월드 갔다가 눈치 게임 실패해서 줄만 서다 옴.",
+    "결과: ⛷️ 스키장에서 넘어졌는데 운명의 상대를 만남.",
+    "결과: 💑 명동 한복판에서 손잡고 걷다가 뉴스 인터뷰 따임.",
+    "결과: 💍 차 트렁크 열었는데 풍선 나오고 프러포즈 받음.",
+    "결과: 🎂 호텔 뷔페 예약 성공해서 배 터지게 먹음.",
+    "결과: 🎬 자동차 극장에서 로맨틱한 영화 데이트.",
+    "결과: 🕯️ 남산 타워 가서 자물쇠 걸다가 열쇠 잃어버림.",
+    "결과: 🧵 커플 목도리 뜨개질하다가 실 엉켜서 포기.",
+    "결과: 👫 아이스링크 가서 김연아 빙의하다가 엉덩방아.",
+    "결과: 💐 꽃다발 들고 고백하러 가는데 넘어짐.",
+    "결과: 💔 커플 사이에서 눈치 없이 껴서 밥 먹음 (눈물 젖은 빵).",
+    "결과: 📱 썸 타던 사람한테 '메리 크리스마스' 카톡 씹힘.",
+    "결과: 🎁 선물 교환 했는데 나는 명품 주고 상대는 양말 줌.",
+    "결과: 🍷 와인 따다가 코르크 마개 안으로 빠짐.",
+    "결과: 💏 첫눈 오는 날 첫 키스 성공.",
+    "결과: 🎄 트리 앞에서 인생네컷 찍다가 뽀뽀함.",
+    "결과: 🚗 드라이브 갔다가 폭설로 차에 갇혀서 데이트.",
+    "결과: 🍽️ 직접 요리해 주려다 주방 태워 먹고 배달 시킴.",
+    "결과: 🤳 럽스타그램 올렸는데 '좋아요'가 안 눌림.",
+    "결과: 💒 친구 결혼식 갔다가 부케 받고 6개월 안에 결혼함.",
+    "결과: 🧨 불꽃놀이 보러 갔다가 연기만 마시고 옴.",
+    "결과: 🏞️ 한강 텐트 데이트 하다가 입 돌아갈 뻔함.",
+    "결과: 💌 러브레터 썼는데 주머니에 넣고 세탁기 돌림.",
+    "결과: 🧸 인형 뽑기방에서 5만원 쓰고 인형 하나 못 뽑음.",
+    "결과: 🎢 놀이공원 귀신의 집 갔다가 썸녀 버리고 도망감.",
+    "결과: 👗 커플룩 입고 나갔는데 똑같은 옷 입은 사람 3명 만남.",
+    "결과: 🕶️ 선글라스 끼고 멋부리다가 어두워서 넘어짐.",
+    "결과: 🎸 길거리 버스킹 구경하다가 끌려나가서 노래 부름.",
+    "결과: 🕍 성당/교회 갔다가 헌금 많이 내고 뿌듯해함.",
+
+    // --- 💸 알바/현생/직장 (현실) ---
+    "결과: 🦄 알바 대타 뛰다가 산타 모자 쓰고 현타 옴.",
+    "결과: 🏪 편의점 알바 중, 커플들이 콘돔 사러 옴 (부들부들).",
+    "결과: 🎂 파리바게트 알바, 케이크 500개 팔아서 팔 근육 생김.",
+    "결과: 🏍️ 배달 알바 하는데 팁 많이 받아서 금융 치료됨.",
+    "결과: 💻 회사 서버 터져서 긴급 호출 당함.",
+    "결과: 📑 연말 정산 미리 계산하다가 세금 보고 기절.",
+    "결과: 📦 택배 상하차 알바 갔다가 루돌프 체험함.",
+    "결과: 👔 평일인 줄 알고 출근했다가 회사 문 잠겨있음.",
+    "결과: ☕ 카페 알바 중, 커플이 라떼 아트 하트로 해달라고 함.",
+    "결과: 🚒 소방관/경찰관님들께 감사하며 집에서 쉼.",
+    "결과: 🏥 응급실 당직 서다가 떡볶이 먹고 체함.",
+    "결과: 🎤 노래방 알바, 서비스 시간 주다가 손가락 마비.",
+    "결과: 🎬 영화관 알바, 커플들 팝콘 치우다가 팝콘 향수 뿌림.",
+    "결과: 🥩 고깃집 알바, 불판 갈다가 손 데임.",
+    "결과: 🚕 택시 안 잡혀서 걸어서 퇴근함.",
+    "결과: 🌨️ 제설 작업 하느라 군대 다시 온 줄 알았음.",
+    "결과: 📱 당근마켓에 안 쓰는 물건 팔아서 치킨 값 벌음.",
+    "결과: 📊 주식 대박 나서 사직서 품고 출근함.",
+    "결과: 📝 자격증 시험 공부하다가 코피 쏟음.",
+    "결과: 🧑‍🏫 과외 하러 갔는데 학생이 크리스마스 선물 줌.",
+    "결과: 🧹 사장님이 '크리스마스에 할 거 없지?' 하며 청소 시킴.",
+    "결과: 🚍 막차 끊겨서 PC방에서 첫차 기다림.",
+    "결과: 💳 법인카드 찬스로 회식하다가 비싼 술 시킴.",
+    "결과: 📉 내 주식만 파란불이라 한강 수온 체크함.",
+    "결과: 💼 이직 성공해서 두 배 연봉으로 계약함.",
+    "결과: 🗣️ 진상 손님 만나서 멘탈 바사삭.",
+    "결과: 🤖 AI가 내 일 다 해줘서 월급 루팡함.",
+    "결과: 📹 유튜버 데뷔했다가 조회수 1 찍음 (내가 본 거).",
+    "결과: 👷 공사장 알바 갔다가 안전모 쓰고 셀카 찍음.",
+    "결과: 🥬 김장 하러 본가 갔다가 배추 100포기 절임.",
+
+    // --- 🎉 파티/친구/유흥 (광란) ---
+    "결과: 🍾 친구들과 파티룸 빌려서 광란의 술 파티.",
+    "결과: 🎤 노래방에서 'All I Want for Christmas Is You' 부르다 삑사리.",
+    "결과: 🍻 술 먹고 길바닥 트리 옆에서 자다가 입 돌아감.",
+    "결과: 🎁 쓸모없는 선물 교환식에서 '짚신' 받음.",
+    "결과: 🕺 홍대 클럽에서 산타 복장 입고 춤추고 있음.",
+    "결과: 🥘 엽떡 시켰는데 매워서 쿨피스 원샷함.",
+    "결과: 🎲 보드게임 카페 가서 부루마불 하다가 파산함.",
+    "결과: 🎳 볼링 치러 갔다가 공 뒤로 던짐.",
+    "결과: 🎱 당구 치다가 큐대로 친구 찌름.",
+    "결과: 🏕️ 글램핑 가서 불멍 하다가 패딩 태워 먹음.",
+    "결과: ⛷️ 스키장 리프트 멈춰서 공중부양 데이트.",
+    "결과: 🧛 할로윈인 줄 알고 코스프레 하고 나감.",
+    "결과: 🃏 타짜 빙의해서 고스톱 치다가 점 100원에 털림.",
+    "결과: 🍷 와인 파티 하는데 포도 주스인 줄 알고 원샷.",
+    "결과: 📸 인생네컷 찍는데 좁아서 얼굴 찌그러짐.",
+    "결과: 🧟 좀비 게임 하다가 너무 무서워서 모니터 깸.",
+    "결과: 🎹 피아노 쳐주려다 '젓가락 행진곡'만 침.",
+    "결과: 🏊 풀빌라 갔는데 온수 안 나와서 냉수마찰.",
+    "결과: 🍖 고기 굽다가 연기 때문에 화재경보기 울림.",
+    "결과: 💃 춤추다가 바지 터져서 강제 귀가.",
+    "결과: 🤳 단체 사진 찍는데 나만 눈 감음.",
+    "결과: 🤢 술 게임 하다가 벌주 마시고 화장실로 런.",
+    "결과: 👬 친구랑 트윈룩 입었는데 쌍둥이 소리 들음.",
+    "결과: 🌮 타코야끼 만들다가 문어 없어서 밀가루만 먹음.",
+    "결과: 🕯️ 촛불 끄다가 앞머리 태움.",
+    "결과: 📱 친구 폰 밟아서 액정 깨짐 (손절 위기).",
+    "결과: 🧼 비누 만들기 원데이 클래스 갔다가 똥 모양 만듦.",
+    "결과: 🎨 그림 그리기 카페 갔다가 얼굴에 물감 칠함.",
+    "결과: 🎡 관람차 탔는데 고소공포증 있어서 바닥만 봄.",
+    "결과: 🏃 방탈출 카페 갔다가 힌트 다 쓰고도 못 나옴.",
+
+    // --- 🌍 여행/랜덤/황당 (예측불가) ---
+    "결과: ✈️ 따뜻한 남쪽 나라로 해외여행 가서 수영함.",
+    "결과: 🛸 외계인이랑 크리스마스 파티 함.",
+    "결과: 🎅 산타 할아버지가 선물 안 줘서 굴뚝 막으러 감.",
+    "결과: 🦌 루돌프가 아파서 내가 대신 썰매 끌고 있음.",
+    "결과: ⛄ 눈사람 만들다가 너무 잘 만들어서 뉴스 나옴.",
+    "결과: 🎫 로또 1등 당첨돼서 잠수 탐.",
+    "결과: 🦖 쥬라기 공원 갔다가 티라노랑 눈싸움 함.",
+    "결과: 🕰️ 타임머신 타고 작년 크리스마스로 돌아감.",
+    "결과: 🧞 램프의 요정 지니 만나서 소원 3개 빔.",
+    "결과: 🧟 바이러스 퍼져서 좀비랑 술래잡기 함.",
+    "결과: 🦸 슈퍼히어로 돼서 지구 구하고 옴.",
+    "결과: 🧙 마법 학교 입학해서 빗자루 타고 배달 알바 함.",
+    "결과: 🧛 뱀파이어한테 물려서 크리스마스에 영생을 얻음.",
+    "결과: 🧜 인어공주 만나서 바닷속 구경함.",
+    "결과: 🐲 용 타고 하늘 날다가 드래곤 길들이기 찍음.",
+    "결과: 🤴 전생에 왕족이었던 기억을 되찾음.",
+    "결과: 🕵️ 탐정 돼서 산타의 비밀을 파헤침.",
+    "결과: 🏴‍☠️ 해적선 타고 보물섬 찾으러 감.",
+    "결과: 🦍 킹콩이랑 엠파이어 스테이트 빌딩 올라감.",
+    "결과: 🌝 달나라 여행 가서 떡방아 찧는 토끼 만남.",
+    "결과: 🦁 사파리 갔다가 사자랑 눈 마주침.",
+    "결과: 🌵 사막 한가운데서 오아시스 발견함.",
+    "결과: 🧊 북극 가서 곰이랑 코카콜라 마심.",
+    "결과: 🌋 화산 폭발해서 찜질방 체험함.",
+    "결과: 🌪️ 토네이도 휩쓸려서 오즈의 마법사 찍음.",
+    "결과: 🌈 무지개 끝에 갔더니 금은보화가 있었음.",
+    "결과: 🦄 유니콘 타고 무지개 미끄럼틀 탐.",
+    "결과: 🍫 찰리의 초콜릿 공장 견학 가서 움파룸파랑 춤.",
+    "결과: 🚂 은하철도 999 타고 우주 여행 함.",
+    "결과: 🕊️ 평화의 비둘기 돼서 전 세계에 사랑 전파함.",
+
+    // --- 🍰 음식/디저트 (먹부림) ---
+    "결과: 🍰 딸기 케이크 한 판 혼자 다 먹음.",
+    "결과: 🍣 초밥 뷔페 가서 사장님 울리고 옴.",
+    "결과: 🥐 붕어빵 3천원어치 샀는데 슈크림만 있음.",
+    "결과: 🍡 탕후루 먹다가 이빨 빠짐.",
+    "결과: ☕ 스타벅스 다이어리 받으려고 커피 17잔 마심.",
+    "결과: 🍔 햄버거 최대 몇 개? 챌린지 하다가 체함.",
+    "결과: 🍕 피자 시켰는데 토핑 다 쏠려서 옴.",
+    "결과: 🍜 한강 라면 먹다가 갈매기한테 뺏김.",
+    "결과: 🍦 아이스크림 케이크 샀는데 드라이아이스만 남음.",
+    "결과: 🌭 핫도그 먹다가 소스 옷에 다 흘림.",
+    "결과: 🥟 만두 빚다가 속 터져서 내가 다 먹음.",
+    "결과: 🦀 대게 먹으러 갔다가 대게 비싸서 게맛살 먹음.",
+    "결과: 🍓 딸기 뷔페 갔는데 딸기보다 생크림을 더 많이 먹음.",
+    "결과: 🍪 쿠키 굽다가 태워서 숯 됨.",
+    "결과: 🧉 쌍화탕 마시고 으른 입맛 인증함.",
+    "결과: 🥗 다이어트 한다고 샐러드 먹고 밤에 치킨 시킴.",
+    "결과: 🥞 팬케이크 뒤집다가 천장에 붙음.",
+    "결과: 🍢 오뎅 국물 마시다가 혀 데임.",
+    "결과: 🍠 군고구마 먹다가 방귀 뀌어서 망신 당함.",
+    "결과: 🍯 꿀단지 퍼먹다가 곰돌이 푸 됨.",
+
+    // --- 🏥 건강/기타 (랜덤) ---
+    "결과: 😷 감기 걸려서 루돌프 코 됨.",
+    "결과: 🦵 빙판길에서 넘어져서 깁스하고 집콕.",
+    "결과: 🦷 사랑니 뽑고 퉁퉁 부어서 크리스마스 보냄.",
+    "결과: 😴 잠만 잤는데 키가 1cm 큼.",
+    "결과: 💆 마사지 받으러 갔다가 비명 지르고 옴.",
+    "결과: 🧖 찜질방 가서 양머리 하고 계란 까먹음.",
+    "결과: 🧗 클라이밍 하다가 팔 힘 풀려서 매달려 있음.",
+    "결과: 🧘 요가 하다가 다리 꼬여서 못 품.",
+    "결과: 🔮 타로점 봤는데 연애운 0% 나옴.",
+    "결과: 💇 앞머리 롤 말고 나갔다가 인싸 됨.",
+    "결과: 🤧 재채기하다가 허리 삐끗함.",
+    "결과: 🧼 목욕탕 갔다가 때 밀고 광명 찾음.",
+    "결과: 💊 영양제 챙겨 먹다가 배불러서 밥 못 먹음.",
+    "결과: 🩸 헌혈하고 영화표 받아서 혼영함.",
+    "결과: 🧴 핸드크림 선물만 10개 받음.",
+    "결과: 🕶️ 라식 수술 하고 세상이 밝아짐.",
+    "결과: 🦶 발가락 문지방에 찧어서 춤춤.",
+    "결과: 👂 귀 파다가 너무 시원해서 극락 감.",
+    "결과: 👃 코딱지 파다가 피 봄.",
+    "결과: 🤐 비밀 얘기하다가 목소리 커져서 다 들킴.",
+    "결과: 🎅 그냥... 착하게 살아서 산타한테 칭찬 받음."
+];
+
+        function startAnalysis() {
+            const name = document.getElementById('username').value;
+            if (!name) { alert('이름을 입력해주세요.'); return; }
+            document.getElementById('input-card').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                showResult(name);
+            }, 1800);
+        }
+
+        function showResult(name) {
+            let sum = 0;
+            for (let i = 0; i < name.length; i++) sum += name.charCodeAt(i);
+            const idx = sum % db.length;
+            const fullText = db[idx].replace("결과: ", "");
+            
+            // 화면 표시
+            document.getElementById('display-name').innerText = name;
+            document.getElementById('fate-text').innerText = fullText;
+            document.getElementById('result-area').style.display = 'block';
+
+            // 캡처 데이터
+            document.getElementById('cap-name').innerText = name;
+            const keyword = fullText.split(/[\.\(]/)[0].replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, '').trim();
+            document.getElementById('cap-keyword').innerText = keyword;
+            document.getElementById('cap-desc').innerText = fullText;
+        }
+
+        // 1. 이미지 저장 (다운로드)
+        function saveImage() {
+            const btn = document.querySelector('.btn-save');
+            const originalText = btn.innerText;
+            btn.innerText = "저장 중...";
+            const target = document.getElementById('capture-target');
+            html2canvas(target, {
+                backgroundColor: "#1a0b0b", // 배경색 강제 지정
+                scale: 3, useCORS: true
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'christmas_2025.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                btn.innerText = originalText;
+            });
+        }
+
+        // 2. 링크 공유 (텍스트+링크 합쳐서 보내기)
+        function shareLink() {
+            const name = document.getElementById('username').value;
+            const result = document.getElementById('fate-text').innerText;
+            const url = window.location.href;
+            
+            // 공유될 멘트 구성
+            const shareText = `${name}님의 2025년 크리스마스 모습은?\n[ ${result} ]\n\n너도 확인해봐! 👇\n${url}`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: '2025 CHRISTMAS FATE',
+                    text: shareText, // 여기에 멘트+링크를 다 넣어야 안전합니다.
+                    url: url
+                }).catch(console.error); // 에러 나도 조용히 넘김
+            } else {
+                // PC이거나 공유 기능 없는 경우 -> 클립보드 복사
+                navigator.clipboard.writeText(shareText)
+                    .then(() => alert("결과와 링크가 복사되었습니다! 카톡 채팅방에 붙여넣기(Ctrl+V) 하세요."))
+                    .catch(() => alert("복사하기를 지원하지 않는 브라우저입니다."));
+            }
+        }
+    </script>
+</body>
+</html>

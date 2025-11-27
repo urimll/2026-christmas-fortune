@@ -1,641 +1,77 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🔮 2026년 신년 운세 타로점</title>
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="🔮 2026년 신년 운세 타로점">
-    <meta property="og:description" content="신비로운 타로 카드가 말해주는 당신의 2026년 운명은? 소름 돋는 결과를 확인하세요.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?q=80&w=1200&auto=format&fit=crop">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5187795938118945"
-        crossorigin="anonymous"></script>
+    <title >심심 연구소 - 2026 운세 모음</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
 
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-
     <style>
-        :root {
-            --bg-dark: #0f0c29;
-            --bg-gradient: linear-gradient(to bottom, #24243e, #0f0c29, #000000);
-            --gold: #D4AF37;
-            --gold-glow: 0 0 15px rgba(212, 175, 55, 0.5);
-            --text-light: #FDFBF7;
+        body { 
+            margin: 0; padding: 20px; font-family: 'Gowun Batang', serif;
+            background: #0f0c29; color: #fff;
+            min-height: 100vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
         }
 
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            padding: 20px;
-            font-family: 'Gowun Batang', serif;
-            background: var(--bg-gradient);
-            color: var(--text-light);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-        }
-
-        /* --- 메인 화면 스타일 (기존 유지) --- */
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            background-image: radial-gradient(white, rgba(255, 255, 255, .2) 2px, transparent 5px), radial-gradient(white, rgba(255, 255, 255, .15) 1px, transparent 3px);
-            background-size: 550px 550px, 350px 350px;
-            z-index: 0;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 380px;
-            position: relative;
-            z-index: 10;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 30px;
-            color: var(--gold);
-            text-shadow: var(--gold-glow);
-            margin-bottom: 8px;
-        }
-
-        .header p {
-            font-size: 15px;
-            opacity: 0.8;
-            color: #ddd;
-        }
-
-        .input-area {
-            background: rgba(0, 0, 0, 0.6);
-            padding: 30px 20px;
-            border: 1px solid var(--gold);
-            border-radius: 15px;
-            box-shadow: var(--gold-glow);
-            margin-top: 30px;
-            backdrop-filter: blur(5px);
-        }
-
-        input {
-            width: 100%;
-            padding: 15px;
-            font-size: 18px;
-            background: transparent;
-            border: none;
-            border-bottom: 2px solid var(--gold);
-            color: var(--gold);
-            text-align: center;
-            font-family: 'Gowun Batang', serif;
-            margin-bottom: 25px;
-        }
-
-        input:focus {
-            outline: none;
-            border-bottom: 2px solid #fff;
-        }
-
-        .btn-gold {
-            background: linear-gradient(45deg, #D4AF37, #FDC830);
-            color: #000;
-            width: 100%;
-            padding: 16px;
-            font-size: 19px;
-            font-weight: bold;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-            font-family: 'Gowun Batang', serif;
-        }
-
-        #loading {
-            display: none;
-            margin-top: 50px;
-        }
-
-        .crystal-ball {
-            font-size: 70px;
-            margin-bottom: 20px;
-            animation: float 2s infinite ease-in-out;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        #card-area {
-            display: none;
-            perspective: 1000px;
-            width: 300px;
-            height: 460px;
-            margin: 20px auto;
-        }
-
-        .card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.8s;
-            transform-style: preserve-3d;
-        }
-
-        .card-inner.flipped {
-            transform: rotateY(180deg);
-        }
-
-        .card-front,
-        .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 15px;
-            border: 2px solid var(--gold);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .card-front {
-            background: #1a1a2e;
-            color: var(--gold);
-            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-        }
-
-        .card-front h2 {
-            font-size: 50px;
-            margin: 0;
-        }
-
-        .card-back {
-            background: linear-gradient(135deg, #200122, #6f0000);
-            color: var(--text-light);
-            transform: rotateY(180deg);
-            padding: 25px;
-            border: 2px solid #fff;
-        }
-
-        .result-keyword {
-            font-size: 28px;
-            font-weight: bold;
-            color: #fff;
-            margin-bottom: 15px;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-
-        .result-desc {
-            font-size: 18px;
-            line-height: 1.6;
-            word-break: keep-all;
-        }
-
-        /* 🔥 하단 버튼 중앙 정렬 스타일 🔥 */
-        .bottom-btns { 
-            display: none; 
-            gap: 10px; 
-            margin: 30px auto; /* 위아래 30px, 좌우 자동(중앙정렬) */
-            width: 100%; 
-            max-width: 340px; 
-            justify-content: center; 
-        }
+        .container { text-align: center; max-width: 400px; width: 100%; }
         
-        /* 버튼 비율 조절 */
-        .btn-outline { 
-            flex: 1; /* '다시하기'는 좁게 */
-            background: transparent; 
-            border: 1px solid var(--gold); 
-            color: var(--gold); 
+        h1 { 
+            font-size: 28px; margin-bottom: 10px; color: #D4AF37; 
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
         }
+        p { color: #aaa; margin-bottom: 40px; font-size: 14px; }
+
+        /* 메뉴 버튼 스타일 */
+        .menu-btn {
+            display: block; width: 100%; padding: 20px; margin-bottom: 20px;
+            border-radius: 15px; text-decoration: none; position: relative;
+            transition: transform 0.2s; overflow: hidden;
+        }
+        .menu-btn:hover { transform: scale(1.02); }
         
-        .btn-share { 
-            flex: 1.8; /* '저장/공유'는 넓게 */
+        /* 1. 크리스마스 버튼 (레드/그린) */
+        .btn-xmas {
+            background: linear-gradient(45deg, #1a0b0b, #3a0000);
+            border: 2px solid #ff4d4d;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
         }
-        /* =========================================
-           🔥 캡처용 이미지 스타일 (폰트 축소 버전 유지)
-        ========================================= */
-        #capture-target {
-            position: fixed;
-            top: -9999px;
-            left: -9999px;
-            width: 360px;
-            height: 640px;
-            /* CSS 배경도 유지 (혹시 모르니) */
-            background: linear-gradient(to bottom, #151525, #252040, #0a0a15);
-            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-            border: 6px double #D4AF37;
-            padding: 35px 25px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            text-align: center;
-            font-family: 'Gowun Batang', serif;
-        }
+        .btn-xmas h2 { margin: 0; font-size: 22px; color: #ff4d4d; }
+        .btn-xmas span { font-size: 13px; color: #8fbc8f; }
 
-        .cap-header .cap-subtitle {
-            color: var(--gold);
-            font-size: 13px;
-            letter-spacing: 4px;
-            margin-bottom: 4px;
-            opacity: 0.7;
+        /* 2. 타로 버튼 (골드/퍼플) */
+        .btn-tarot {
+            background: linear-gradient(45deg, #0f0c29, #24243e);
+            border: 2px solid #D4AF37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
+        .btn-tarot h2 { margin: 0; font-size: 22px; color: #D4AF37; }
+        .btn-tarot span { font-size: 13px; color: #ccc; }
 
-        .cap-header .cap-title {
-            color: #fff;
-            font-size: 24px;
-            font-weight: bold;
-            text-shadow: 0 0 10px var(--gold);
-            margin: 0;
-        }
-
-        .cap-card-visual {
-            width: 100%;
-            flex-grow: 1;
-            margin: 25px 0;
-            background: linear-gradient(135deg, #220033, #400000);
-            border: 2px solid var(--gold);
-            border-radius: 12px;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.25);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 25px;
-            position: relative;
-        }
-
-        .cap-card-visual::before,
-        .cap-card-visual::after {
-            content: '✦';
-            position: absolute;
-            color: var(--gold);
-            font-size: 18px;
-            opacity: 0.5;
-        }
-
-        .cap-card-visual::before {
-            top: 12px;
-            left: 12px;
-        }
-
-        .cap-card-visual::after {
-            bottom: 12px;
-            right: 12px;
-        }
-
-        .cap-for {
-            color: var(--gold);
-            font-size: 12px;
-            margin-bottom: 8px;
-            opacity: 0.6;
-            letter-spacing: 1px;
-        }
-
-        .cap-name {
-            color: #fff;
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--gold);
-            display: inline-block;
-            padding-bottom: 4px;
-        }
-
-        .cap-keyword {
-            font-size: 32px;
-            color: var(--gold);
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
-            line-height: 1.2;
-        }
-
-        .cap-desc {
-            font-size: 16px;
-            color: #f0f0f0;
-            line-height: 1.6;
-            word-break: keep-all;
-            opacity: 0.9;
-            font-weight: 400;
-        }
-
-        .cap-footer {
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 11px;
-            letter-spacing: 1px;
-        }
+        .footer { margin-top: 50px; font-size: 12px; color: #555; }
     </style>
 </head>
-
 <body>
-    <div class="stars"></div>
 
     <div class="container">
-        <div class="header">
-            <h1>2026<br>운명의 타로점 🔮</h1>
-            <p>별들이 말해주는 당신의 내년 운세</p>
-        </div>
-        <div class="input-area" id="input-area">
-            <input type="text" id="username" placeholder="이름을 입력하세요" autocomplete="off">
-            <button class="btn-gold" onclick="startDivination()">운명 카드 뽑기</button>
-        </div>
-        <div id="loading">
-            <div class="crystal-ball">🔮</div>
-            <p style="color:var(--gold);">우주의 기운을 모으는 중...</p>
-        </div>
-        <div id="card-area" onclick="flipCard()">
-            <div class="card-inner" id="card-inner">
-                <div class="card-front">
-                    <h2>2026</h2><span style="font-size:14px; margin-top:10px; opacity:0.6;">터치해서 뒤집기</span>
-                </div>
-                <div class="card-back">
-                    <div style="color:var(--gold); font-size:18px; margin-bottom:15px;">THE FATE OF <span
-                            id="res-name"></span></div>
-                    <div class="result-keyword" id="res-keyword"></div>
-                    <div class="result-desc" id="res-desc"></div>
-                    <div style="position:absolute; bottom:20px; font-size:12px; opacity:0.5;">▼ 하단 버튼으로 저장/공유 ▼</div>
-                </div>
-            </div>
-        </div>
-        <div class="bottom-btns" id="bottom-btns">
-            <button class="btn-gold btn-outline" onclick="location.reload()">다시하기</button>
-            <button class="btn-gold btn-share" onclick="captureAndShare()">📸 결과 저장/공유</button>
-        </div>
-        <div id="ad-box" style="margin-top:20px; display:none;">
-           <p style="color:var(--gold); font-size:13px; margin-bottom:10px; opacity:0.8;">
-               👇 복채는 '클릭'으로 대신할게요! 👇
-           </p>
-           
-           <a href="https://link.coupang.com/a/c7YBPa" target="_blank" style="text-decoration:none;">
-               <div style="
-                   background: linear-gradient(45deg, #D4AF37, #FDC830);
-                   color: #000;
-                   padding: 15px;
-                   border-radius: 10px;
-                   font-weight: bold;
-                   font-size: 16px;
-                   box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-                   display: flex; align-items: center; justify-content: center; gap: 10px;
-                   transition: transform 0.2s;
-               " onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-                   <span>🎁</span>
-                   <span>나의 '행운의 아이템' 확인하기</span>
-               </div>
-           </a>
-           
-           <p style="font-size:10px; color:#666; margin-top:8px; opacity:0.5;">
-               이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
-           </p>
-       </div>
-    </div>
+        <h1>🌙 심심 연구소</h1>
+        <p>당신의 미래를 확인해보세요</p>
 
-    <div id="capture-target">
-        <div class="cap-header">
-            <div class="cap-subtitle">MYSTICAL TAROT</div>
-            <div class="cap-title">2026 신년 운세</div>
-        </div>
+        <a href="christmas.html" class="menu-btn btn-xmas">
+            <h2>🎄 크리스마스 운명</h2>
+            <span>산타가 알려주는 12월 25일의 예언</span>
+        </a>
 
-        <div class="cap-card-visual">
-            <div class="cap-for">THE FATE OF</div>
-            <div class="cap-name" id="cap-name">홍길동</div>
-            <div class="cap-keyword" id="cap-keyword">대박의 기운</div>
-            <div class="cap-desc" id="cap-desc">설명 텍스트입니다.</div>
-        </div>
+        <a href="tarot.html" class="menu-btn btn-tarot">
+            <h2>🔮 2026 신년 타로</h2>
+            <span>신비로운 카드로 보는 나의 1년 운세</span>
+        </a>
 
-        <div class="cap-footer">
-            당신의 운명을 확인해보세요 | www.simsimu.com
+        <div class="footer">
+            © 2025 SimSim Lab. All rights reserved.
         </div>
     </div>
-
-    <script>
-        // 운세 데이터 (50개)
-        const fortunes = [
-            { k: "대박의 기운", d: "숨만 쉬어도 통장에 돈이 쌓이는 해. 로또를 사도 좋습니다." },
-            { k: "새로운 인연", d: "평생을 함께할 귀인이 나타납니다. 사람을 귀하게 여기세요." },
-            { k: "도약의 시기", d: "준비했던 모든 일이 결실을 맺습니다. 두려워 말고 저지르세요." },
-            { k: "인기 폭발", d: "어딜 가나 주인공이 되는 해. 당신의 매력이 만천하에 드러납니다." },
-            { k: "건강 회복", d: "지쳤던 몸과 마음이 씻은 듯이 낫습니다. 최고의 컨디션을 되찾습니다." },
-            { k: "뜻밖의 행운", d: "길을 걷다 돈을 줍는 수준의 행운이 따릅니다. 기대해도 좋습니다." },
-            { k: "승진과 합격", d: "시험, 면접, 승진... 원하는 자리가 당신을 기다리고 있습니다." },
-            { k: "사랑의 결실", d: "짝사랑이 이루어지거나, 연인과 더 깊은 관계로 발전합니다." },
-            { k: "재능 발견", d: "몰랐던 당신의 재능이 빛을 발합니다. 새로운 취미를 시작해보세요." },
-            { k: "여행의 운", d: "떠나면 얻으리라. 낯선 곳에서 인생의 해답을 찾게 됩니다." },
-            { k: "문서운 상승", d: "부동산이나 계약 관련해서 아주 좋은 소식이 들려옵니다." },
-            { k: "과거 청산", d: "골치 아팠던 문제들이 눈 녹듯 사라집니다. 마음의 평화가 옵니다." },
-            { k: "터닝 포인트", d: "인생이 180도 바뀌는 사건이 생깁니다. 물론 아주 긍정적인 쪽으로요." },
-            { k: "리더의 자질", d: "사람들이 당신을 따릅니다. 무리의 중심에서 능력을 발휘하세요." },
-            { k: "금전적 여유", d: "사고 싶었던 것을 가격표 안 보고 살 수 있는 여유가 생깁니다." },
-            { k: "화해와 용서", d: "멀어졌던 사람과 다시 가까워집니다. 관계가 회복되는 해입니다." },
-            { k: "창의력 폭발", d: "아이디어가 샘솟습니다. 메모하는 습관이 당신을 부자로 만듭니다." },
-            { k: "내 집 마련", d: "안정적인 보금자리를 얻을 운이 강하게 들어옵니다." },
-            { k: "다이어트 성공", d: "원하는 몸매를 얻게 됩니다. 이번에는 작심삼일이 아닙니다." },
-            { k: "해외 진출", d: "활동 무대가 넓어집니다. 외국어 공부를 시작하면 좋습니다." },
-            { k: "가정의 평화", d: "집안에 웃음소리가 끊이지 않습니다. 행복은 가까이에 있습니다." },
-            { k: "자존감 상승", d: "자신을 진정으로 사랑하게 됩니다. 멘탈이 강철처럼 단단해집니다." },
-            { k: "뜻밖의 조력자", d: "혼자 끙끙 앓던 일을 누군가 시원하게 해결해 줍니다." },
-            { k: "솔로 탈출", d: "외로움 끝, 행복 시작. 당신을 아껴줄 사람이 나타납니다." },
-            { k: "나만의 사업", d: "내 이름으로 된 무언가를 시작하기 딱 좋은 시기입니다." },
-            { k: "학업 성취", d: "머리가 비상하게 돌아갑니다. 공부하는 족족 내 것이 됩니다." },
-            { k: "완벽한 휴식", d: "치열하게 산 당신, 걱정 없이 푹 쉴 수 있는 기회가 옵니다." },
-            { k: "미모 갱신", d: "올해따라 '예뻐졌다/잘생겨졌다'는 말을 지겹도록 듣게 됩니다." },
-            { k: "나쁜 습관 손절", d: "술, 담배, 게으름... 당신을 갉아먹던 것들과 이별하게 됩니다." },
-            { k: "유명세", d: "SNS나 커뮤니티에서 유명해질 수 있습니다. 말조심은 필수!" },
-            { k: "투자의 귀재", d: "당신의 감이 적중합니다. 다만 욕심은 금물입니다." },
-            { k: "오해 해소", d: "당신을 둘러싼 나쁜 소문이나 오해가 깨끗하게 풀립니다." },
-            { k: "예술적 영감", d: "글, 그림, 음악 등 예술적 감각이 최고조에 달합니다." },
-            { k: "소원 성취", d: "간절히 바라던 소원 하나가 기적처럼 이루어집니다." },
-            { k: "용기 있는 선택", d: "망설이던 일에 뛰어들게 되고, 그 선택은 정답이 됩니다." },
-            { k: "경쟁 승리", d: "라이벌을 제치고 독보적인 위치에 오릅니다." },
-            { k: "깊은 깨달음", d: "삶을 대하는 태도가 성숙해집니다. 어른이 되어가는 해입니다." },
-            { k: "끊임없는 웃음", d: "별일 아닌 일에도 웃음이 나는, 즐거운 한 해가 됩니다." },
-            { k: "선물 공세", d: "주변 사람들로부터 물질적, 정신적 선물을 많이 받게 됩니다." },
-            { k: "스피드 업", d: "지지부진하던 일들이 속도를 내어 빠르게 해결됩니다." },
-            { k: "안전 운행", d: "큰 사고나 병치레 없이 무탈하고 건강하게 지나갑니다." },
-            { k: "감동의 순간", d: "눈물 핑 도는 감동적인 이벤트를 겪게 됩니다." },
-            { k: "철벽 방어", d: "사기나 나쁜 유혹으로부터 안전하게 자신을 지켜냅니다." },
-            { k: "맛있는 인생", d: "가는 곳마다 맛집이고, 먹는 복이 터지는 해입니다." },
-            { k: "새로운 가족", d: "반려동물을 맞이하거나, 가족 구성원이 늘어날 수 있습니다." },
-            { k: "쇼핑 성공", d: "사는 물건마다 꿀템이고 가격도 오르는 기이한 현상." },
-            { k: "꿀잠의 축복", d: "불면증이 사라지고 매일 아침이 개운합니다." },
-            { k: "칭찬 감옥", d: "주변에서 당신을 칭찬하느라 가만히 두질 않습니다." },
-            { k: "무한 긍정", d: "어떤 시련이 와도 긍정적으로 이겨내는 멘탈갑이 됩니다." },
-            { k: "주인공은 너", d: "2026년이라는 영화의 주연 배우는 바로 당신입니다." },
-            { k: "귀인의 조력", d: "어려움에 처했을 때 뜻밖의 귀인이 나타나 길을 열어줍니다." },
-            { k: "천운의 도래", d: "하늘이 돕는 형국이니, 막혔던 일이 봇물 터지듯 풀리게 됩니다." },
-            { k: "재물의 번영", d: "마른 땅에 단비가 내리듯, 곳간에 재물이 가득 차는 풍요로운 해입니다." },
-            { k: "도화의 기운", d: "사람을 끄는 매혹적인 향기가 나니, 어딜 가나 이목을 집중시킵니다." },
-            { k: "오랜 소원 성취", d: "가슴 속에 품어왔던 간절한 소망 하나가 드디어 현실이 됩니다." },
-            { k: "역마의 발동", d: "넓은 세상으로 나아갈 운입니다. 이동과 변화가 곧 기회로 연결됩니다." },
-            { k: "금의환향", d: "타지에서 이름을 떨치고, 명예롭게 제자리로 돌아와 인정을 받습니다." },
-            { k: "만사형통", d: "모든 일이 뜻대로 풀리니 근심과 걱정이 사라지는 평온한 시기입니다." },
-            { k: "악재의 소멸", d: "당신을 괴롭히던 삼재와 액운이 물러가고 상서로운 기운만 남습니다." },
-            { k: "문서의 취득", d: "중요한 계약이 성사되거나, 내 명의로 된 큰 자산을 얻게 될 운입니다." },
-            { k: "인연의 재회", d: "과거에 스쳐 간 소중한 인연과 다시 닿아, 새로운 이야기를 쓰게 됩니다." },
-            { k: "지혜의 눈", d: "사물을 꿰뚫어 보는 통찰력이 생겨, 위기를 기회로 바꾸는 지혜를 얻습니다." },
-            { k: "명예의 상승", d: "당신의 이름이 널리 알려지고, 많은 사람의 존경과 우러름을 받습니다." },
-            { k: "태평성대", d: "가정이 화목하고 신변이 안정되니, 더할 나위 없는 평화가 찾아옵니다." },
-            { k: "비룡승천", d: "잠자던 용이 하늘로 오르듯, 당신의 잠재력이 폭발하여 큰 성과를 냅니다." },
-            { k: "건강의 회복", d: "몸 안의 나쁜 기운이 빠져나가고, 생기가 돌아 활력이 넘칩니다." },
-            { k: "필연적 성공", d: "우연이 아닌 노력의 결실로, 흔들리지 않는 견고한 성공을 거둡니다." },
-            { k: "사랑의 안식", d: "불안했던 마음을 기댈 수 있는 단단하고 따뜻한 안식처를 만납니다." },
-            { k: "경사의 연속", d: "집안에 웃음꽃이 피는 좋은 소식이 연달아 들려옵니다." },
-            { k: "고진감래", d: "그동안의 고생이 끝나고, 이제는 달콤한 보상을 누릴 차례입니다." },
-            { k: "새로운 도약", d: "과거의 껍질을 깨고 더 높은 곳으로 비상하는 전환점이 됩니다." },
-            { k: "황금기", d: "인생에서 가장 빛나는 시기가 도래했습니다. 지금 이 순간을 즐기세요." },
-            { k: "결자해지", d: "묵은 갈등과 오해가 풀리고, 맺힌 매듭이 자연스럽게 풀립니다." },
-            { k: "천생연분", d: "운명의 붉은 실로 이어진, 영혼의 단짝을 알아보게 됩니다." },
-            { k: "무병장수", d: "잔병치레 없이 강건하며, 심신이 맑고 깨끗해지는 해입니다." },
-            { k: "일취월장", d: "학업이나 기술이 날로 발전하여, 그 분야의 전문가로 거듭납니다." },
-            { k: "전화위복", d: "화가 바뀌어 오히려 복이 되니, 나쁜 일조차 좋은 결과로 이어집니다." },
-            { k: "풍전등화의 끝", d: "위태로웠던 상황이 정리되고, 반석 위에 집을 짓듯 안정을 찾습니다." },
-            { k: "자손의 번창", d: "아랫사람이나 후배들에게 좋은 일이 생겨, 그 덕을 함께 봅니다." },
-            { k: "적토마의 기상", d: "하루에 천 리를 달리는 말처럼, 거침없이 목표를 향해 질주합니다." },
-            { k: "심기일전", d: "마음을 새롭게 먹으니, 안 되던 일도 술술 풀리기 시작합니다." },
-            { k: "유비무환", d: "미리 준비한 자에게 기회가 오니, 당신의 준비성이 빛을 발합니다." },
-            { k: "화룡점정", d: "오랫동안 공들인 일에 마지막 점을 찍어 완벽한 작품을 만듭니다." },
-            { k: "낭중지추", d: "주머니 속의 송곳처럼, 감추려 해도 당신의 뛰어난 재능이 드러납니다." },
-            { k: "백년해로", d: "연인이나 배우자와의 관계가 더욱 깊어지고, 서로의 소중함을 깨닫습니다." },
-            { k: "일확천금", d: "예상치 못한 곳에서 큰 재물이 들어와 곳간을 채웁니다." },
-            { k: "대기만성", d: "조금 늦더라도 결국에는 크게 이루어내니, 조급해할 필요가 없습니다." },
-            { k: "수호천사", d: "보이지 않는 힘이 당신을 지켜주니, 어떤 위험도 비켜갑니다." },
-            { k: "마음의 정화", d: "복잡했던 번뇌가 사라지고, 명경지수와 같이 맑은 정신을 얻습니다." },
-            { k: "인덕의 발복", d: "베풀었던 덕이 배가 되어 돌아오니, 주변에 사람이 끊이지 않습니다." },
-            { k: "승승장구", d: "싸우면 이기고 구하면 얻으니, 거칠 것이 없는 기세입니다." },
-            { k: "운수대통", d: "막힌 혈이 뚫리듯 운의 흐름이 원활하여 하는 일마다 대길합니다." },
-            { k: "솔로몬의 지혜", d: "난관을 타개할 현명한 판단력이 생겨, 리더로서 존경받습니다." },
-            { k: "청신호", d: "망설이던 일에 파란불이 켜졌습니다. 지금이 바로 움직일 때입니다." },
-            { k: "안분지족", d: "현재에 만족하며 평안을 얻으니, 내면의 행복이 가득 찹니다." },
-            { k: "파죽지세", d: "대나무를 쪼개는 기세로, 경쟁자들을 물리치고 우위를 점합니다." },
-            { k: "금상첨화", d: "좋은 일 위에 또 좋은 일이 겹치니, 기쁨이 두 배가 됩니다." },
-            { k: "해후", d: "그리워하던 사람이나 장소와 다시 만나 깊은 회포를 풀게 됩니다." },
-            { k: "의기투합", d: "뜻이 맞는 동료를 만나 함께 큰일을 도모하게 됩니다." },
-            { k: "광명", d: "어두운 터널을 지나 눈부신 빛을 마주하니, 앞날이 창창합니다." }
-        ];
-        let isResultReady = false;
-
-        function startDivination() {
-            const name = document.getElementById('username').value;
-            if (!name) return alert('이름을 입력해주세요.');
-            document.getElementById('input-area').style.display = 'none';
-            document.getElementById('loading').style.display = 'block';
-            prepareResult(name);
-            setTimeout(() => {
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('card-area').style.display = 'block';
-                isResultReady = true;
-            }, 2000);
-        }
-
-        function prepareResult(name) {
-            let sum = 0;
-            for (let i = 0; i < name.length; i++) sum += name.charCodeAt(i);
-            const idx = sum % fortunes.length;
-            const fate = fortunes[idx];
-
-            // 메인 화면
-            document.getElementById('res-name').innerText = name;
-            document.getElementById('res-keyword').innerText = fate.k;
-            document.getElementById('res-desc').innerText = fate.d;
-
-            // 캡처 화면
-            document.getElementById('cap-name').innerText = name;
-            document.getElementById('cap-keyword').innerText = fate.k;
-            document.getElementById('cap-desc').innerText = fate.d;
-        }
-
-        function flipCard() {
-            if (!isResultReady) return;
-            document.getElementById('card-inner').classList.add('flipped');
-            setTimeout(() => {
-                document.getElementById('bottom-btns').style.display = 'flex';
-                document.getElementById('ad-box').style.display = 'block';
-            }, 800);
-        }
-
-       function captureAndShare() {
-            const btn = event.target;
-            const originalText = btn.innerText;
-            btn.innerText = "✨ 이미지 생성 중...";
-
-            const target = document.getElementById('capture-target');
-
-            html2canvas(target, { 
-                backgroundColor: "#0f0c29",
-                scale: 2,
-                logging: false,
-                useCORS: true
-            }).then(canvas => {
-                canvas.toBlob(function(blob) {
-                    const file = new File([blob], "fortune_2026.png", { type: "image/png" });
-                    
-                    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-                        navigator.share({
-                            files: [file],
-                            title: '2026년 신년 운세',
-                            // 🔥 [수정됨] 텍스트 뒤에 주소를 직접 붙였습니다!
-                            text: '내 2026년 운세 결과야! 🔮\n너도 확인해봐 👇\n' + window.location.href,
-                            url: window.location.href
-                        }).then(() => btn.innerText = originalText).catch(() => btn.innerText = originalText);
-                    } else {
-                        // PC 등 공유 미지원 시
-                        const link = document.createElement('a');
-                        link.download = '2026_fortune.png';
-                        link.href = canvas.toDataURL('image/png');
-                        link.click();
-                        alert("이미지가 저장되었습니다! 인스타/트위터에 올려보세요.");
-                        btn.innerText = originalText;
-                    }
-                }, 'image/png');
-            });
-        }
-    </script>
-    <div class="seo-content"
-        style="max-width:600px; margin:50px auto; padding:20px; color:#888; font-size:12px; line-height:1.6; text-align:left; background:rgba(0,0,0,0.3); border-radius:10px;">
-        <h3 style="color:#D4AF37; margin-bottom:10px;">2026년 병오년(丙午年) 신년 운세에 대하여</h3>
-        <p>
-            2026년은 육십간지의 43번째 해인 병오년(丙午年)으로, '붉은 말의 해(Red Horse)'를 의미합니다. 천간인 '병(丙)'은 붉은색과 불(火)을 상징하고, 지지인 '오(午)'는 말(馬)을
-            뜻합니다. 이는 강렬한 태양의 에너지와 역동적인 말의 기운이 합쳐진 해로, 그 어느 때보다 진취적이고 열정적인 기운이 감도는 시기가 될 것입니다.
-        </p>
-        <p>
-            본 서비스인 '2026 신년 운세 타로점'은 동양의 사주 명리학과 서양의 타로 카드 점술을 현대적으로 재해석하여 개발된 디지털 운세 플랫폼입니다. 사용자의 이름(성명학적 요소)에 기반한 고유
-            알고리즘을 통해 2026년의 총운, 재물운, 연애운, 직장운 등을 종합적으로 분석합니다. 단순히 재미로 보는 운세를 넘어, 2026년 한 해를 미리 계획하고 긍정적인 마음가짐을 갖는 데 도움을
-            주기 위해 제작되었습니다.
-        </p>
-        <h3 style="color:#D4AF37; margin-top:20px; margin-bottom:10px;">타로 카드의 상징과 의미</h3>
-        <p>
-            타로(Tarot)는 78장의 카드로 이루어진 점술 도구로, 각 카드는 인간의 삶, 경험, 그리고 우주의 법칙을 상징합니다. 메이저 아르카나와 마이너 아르카나로 구성된 타로 카드는 무의식의 영역을
-            시각화하여 우리가 미처 깨닫지 못한 내면의 목소리를 들려줍니다. 이 사이트에서는 직관적인 3D 인터랙션을 통해 실제 카드를 뽑는 듯한 경험을 제공하며, 각 카드가 담고 있는 긍정적인 메시지를
-            통해 사용자에게 희망과 용기를 전달하고자 합니다.
-        </p>
-        <p style="margin-top:20px; opacity:0.6;">
-            ※ 본 서비스의 결과는 재미를 위한 것이며, 과학적 근거는 없습니다. 모든 운명의 결정권은 당신에게 있습니다.<br>
-        </p>
-    </div>
-
 
 </body>
-</body>
-
 </html>
