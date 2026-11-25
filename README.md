@@ -46,13 +46,12 @@ const idx = sum % fortunes.length;   // 이름 → 고정된 운세
 
 ## 🚀 배포
 - GitHub Pages로 호스팅해요. (예전에는 커스텀 도메인을 연결했었어요.)
-- Google AdSense를 붙였어요. `ads.txt`로 광고 판매자를 인증해요.
+- Google AdSense 광고 스크립트를 붙였어요.
 
 ## 🗂 파일 구조
 
 ```
 ├── index.html       # 메인 메뉴
 ├── christmas.html   # 크리스마스 운명
-├── tarot.html       # 2026 신년 타로
-└── ads.txt          # AdSense 인증
+└── tarot.html       # 2026 신년 타로
 ```
