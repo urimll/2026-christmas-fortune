@@ -8,7 +8,6 @@
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-222222?style=flat-square&logo=githubpages&logoColor=white)
-![AdSense](https://img.shields.io/badge/Google_AdSense-4285F4?style=flat-square&logo=googleadsense&logoColor=white)
 
 > 2025.11 · 개인 프로젝트 · 프레임워크 없이 HTML/CSS/JS로 만들고 GitHub Pages로 배포했어요.
 
@@ -46,7 +45,6 @@ const idx = sum % fortunes.length;   // 이름 → 고정된 운세
 
 ## 🚀 배포
 - GitHub Pages로 호스팅해요. (예전에는 커스텀 도메인을 연결했었어요.)
-- Google AdSense 광고 스크립트를 붙였어요.
 
 ## 🗂 파일 구조
 
