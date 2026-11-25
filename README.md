@@ -2,13 +2,15 @@
 
 **이름만 넣으면 올해 크리스마스와 내년 운세를 알려주는 웹 운세 사이트**
 
+🔗 **[urimll.github.io/2026-christmas-fortune](https://urimll.github.io/2026-christmas-fortune/)**
+
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-222222?style=flat-square&logo=githubpages&logoColor=white)
 ![AdSense](https://img.shields.io/badge/Google_AdSense-4285F4?style=flat-square&logo=googleadsense&logoColor=white)
 
-> 2025.11 · 개인 프로젝트 · 프레임워크 없이 HTML/CSS/JS로 만들고 GitHub Pages + 커스텀 도메인으로 배포했었어요.
+> 2025.11 · 개인 프로젝트 · 프레임워크 없이 HTML/CSS/JS로 만들고 GitHub Pages로 배포했어요.
 
 ## ✨ 페이지 구성
 
@@ -43,7 +45,7 @@ const idx = sum % fortunes.length;   // 이름 → 고정된 운세
 - 🔗 **공유:** 모바일에서는 `navigator.share`로 바로 공유하고, 안 되는 환경에서는 링크를 클립보드에 복사해요.
 
 ## 🚀 배포
-- GitHub Pages로 호스팅하고, `CNAME` 파일로 커스텀 도메인을 연결했어요.
+- GitHub Pages로 호스팅해요. (예전에는 커스텀 도메인을 연결했었어요.)
 - Google AdSense를 붙였어요. `ads.txt`로 광고 판매자를 인증해요.
 
 ## 🗂 파일 구조
@@ -52,6 +54,5 @@ const idx = sum % fortunes.length;   // 이름 → 고정된 운세
 ├── index.html       # 메인 메뉴
 ├── christmas.html   # 크리스마스 운명
 ├── tarot.html       # 2026 신년 타로
-├── CNAME            # 커스텀 도메인
 └── ads.txt          # AdSense 인증
 ```
